@@ -37,13 +37,26 @@ const Index = () => {
         <section aria-label="Intro">
           <NameHover />
 
+          <p className="text-faint text-sm italic mb-6 -mt-4">
+            {t.location[lang]}, <span aria-label="India">🇮🇳</span>
+          </p>
+
           <p className="text-foreground leading-relaxed">
-            I believe technology is the most powerful <strong className="font-semibold">tool</strong> we have to{" "}
-            <strong className="font-semibold underline underline-offset-4 decoration-1">help</strong> people, and that's what I'm here to build.
+            I believe technology is the most powerful tool we have to{" "}
+            <strong className="font-semibold">help</strong> people, and that's what I'm here to build.
           </p>
 
           <p className="text-mute mt-6 leading-relaxed">
             {t.bioStart[lang]}
+            <a
+              href="https://www.conquestbits.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-inline"
+            >
+              {t.conquestLink[lang]}
+            </a>
+            {t.bioAfterConquest[lang]}
             <a href="#projects" className="link-inline">{t.projectsLink[lang]}</a>
             {t.bioMid[lang]}
             <a href="#logx" className="link-inline">{t.logxLink[lang]}</a>

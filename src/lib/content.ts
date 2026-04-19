@@ -53,8 +53,13 @@ export const t = {
   fullName: { en: "Priyansh Joshi", hi: "प्रियांश जोशी" },
   belovedPart: { en: "beloved part", hi: "प्रिय अंश" },
   bioStart: {
-    en: "First-year electrical engineering student at BITS Pilani. Working at Conquest, India's largest student-run startup accelerator. See my ",
-    hi: "BITS पिलानी में इलेक्ट्रिकल इंजीनियरिंग का प्रथम वर्ष का छात्र। Conquest — भारत के सबसे बड़े छात्र-संचालित स्टार्टअप एक्सेलरेटर — में काम कर रहा हूँ। मेरे ",
+    en: "First-year electrical engineering student at BITS Pilani. Working at ",
+    hi: "BITS पिलानी में इलेक्ट्रिकल इंजीनियरिंग का प्रथम वर्ष का छात्र। ",
+  },
+  conquestLink: { en: "Conquest", hi: "Conquest" },
+  bioAfterConquest: {
+    en: ", India's largest student-run startup accelerator. See my ",
+    hi: " — भारत के सबसे बड़े छात्र-संचालित स्टार्टअप एक्सेलरेटर — में काम कर रहा हूँ। मेरे ",
   },
   projectsLink: { en: "projects", hi: "प्रोजेक्ट्स" },
   bioMid: { en: ", read ", hi: " देखें, " },
@@ -64,8 +69,8 @@ export const t = {
   bioFinal: { en: ".", hi: "।" },
   sectionAbout: { en: "about", hi: "परिचय" },
   aboutPara: {
-    en: "I'm drawn to things that move fast and matter — rockets, startups, AI, the messy overlap between all three. I got into engineering because I wanted to understand how things work. I stayed because I realised building things is the closest you can get to changing them. Outside of that, I follow Formula 1 probably more seriously than I should, read whatever I can get my hands on, and spend a lot of time thinking about what the next ten years of technology actually look like for people who aren't already in the room.",
-    hi: "मुझे वो चीज़ें खींचती हैं जो तेज़ चलती हैं और मायने रखती हैं — रॉकेट्स, स्टार्टअप्स, AI, और इन तीनों के बीच का बिखरा हुआ ओवरलैप। इंजीनियरिंग में इसलिए आया क्योंकि समझना चाहता था कि चीज़ें कैसे काम करती हैं। टिका इसलिए क्योंकि एहसास हुआ कि चीज़ें बनाना उन्हें बदलने के सबसे क़रीब है। इसके अलावा, Formula 1 शायद ज़रूरत से ज़्यादा गंभीरता से देखता हूँ, जो हाथ लगे पढ़ता हूँ, और बहुत सारा वक़्त इस सोच में बिताता हूँ कि अगले दस साल की तकनीक उन लोगों के लिए असल में कैसी दिखेगी जो अभी उस कमरे में नहीं हैं।",
+    en: "I'm fascinated by the future, what technology is about to make possible, and who gets to shape it. Today I'm learning AI and building with it. But what started everything was rockets: the sheer ambition of the thing. I play sport to stay sane, learn to stay curious, and I trekked to Everest Base Camp with my dad because some things you just have to go do. I care about geopolitics for the same reason I care about tech — the world is being written right now, and I'd rather understand it than watch it happen.",
+    hi: "मैं भविष्य से मोहित हूँ — कि तकनीक अभी क्या मुमकिन करने वाली है, और उसे आकार देने का मौक़ा किसे मिलेगा। आज मैं AI सीख रहा हूँ और उससे बना रहा हूँ। लेकिन सब कुछ शुरू हुआ था रॉकेट्स से — उस चीज़ की निरी महत्वाकांक्षा से। मैं खेल खेलता हूँ ख़ुद को संतुलित रखने के लिए, सीखता हूँ जिज्ञासा बनाए रखने के लिए, और अपने पिताजी के साथ एवरेस्ट बेस कैंप तक ट्रेक किया क्योंकि कुछ चीज़ें बस करनी पड़ती हैं। मुझे जियोपॉलिटिक्स की परवाह उसी वजह से है जिस वजह से तकनीक की — दुनिया अभी लिखी जा रही है, और मैं उसे देखने के बजाय समझना पसंद करूँगा।",
   },
   sectionProjects: { en: "Projects", hi: "प्रोजेक्ट्स" },
   sectionWriting: { en: "LogX", hi: "LogX" },
@@ -78,4 +83,5 @@ export const t = {
   rocket: { en: "↑ still launching", hi: "↑ अभी उड़ान पर" },
   comingSoon: { en: "coming soon", hi: "जल्द आ रहा है" },
   back: { en: "← back", hi: "← वापस" },
+  location: { en: "Bangalore", hi: "बेंगलुरु" },
 } as const;
