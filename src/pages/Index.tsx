@@ -38,7 +38,8 @@ const Index = () => {
           <NameHover />
 
           <p className="text-foreground leading-relaxed">
-            {t.tagline[lang]}
+            I believe technology is the most powerful <strong className="font-semibold">tool</strong> we have to{" "}
+            <strong className="font-semibold underline underline-offset-4 decoration-1">help</strong> people, and that's what I'm here to build.
           </p>
 
           <p className="text-mute mt-6 leading-relaxed">
@@ -54,18 +55,26 @@ const Index = () => {
           <QuoteOnLoad />
         </section>
 
+        {/* About */}
+        <section id="about" aria-labelledby="about-heading" className="mt-24">
+          <h2 id="about-heading" className="text-foreground mb-6">
+            {t.sectionAbout[lang]}
+          </h2>
+          <p className="text-mute leading-relaxed">{t.aboutPara[lang]}</p>
+        </section>
+
         {/* Projects */}
         <section id="projects" aria-labelledby="projects-heading" className="mt-24">
           <h2 id="projects-heading" className="text-foreground mb-6">
             {t.sectionProjects[lang]}
           </h2>
-          <div className="space-y-3">
+          <div className="space-y-8">
             {projects.map((p) => (
               <ProjectCard
                 key={p.name}
                 name={p.name}
                 description={lang === "en" ? p.descEn : p.descHi}
-                status={p.status ? (p.status === "in progress" ? t.inProgress[lang] : p.status) : null}
+                status={p.status}
                 url={p.url}
               />
             ))}
@@ -90,14 +99,9 @@ const Index = () => {
           </ul>
         </section>
 
-        {/* Contact */}
-        <section id="contact" aria-labelledby="contact-heading" className="mt-24">
-          <h2 id="contact-heading" className="text-foreground mb-4">
-            {t.sectionContact[lang]}
-          </h2>
-          <p className="text-mute leading-relaxed">{t.contactLine[lang]}</p>
-
-          <div className="flex items-center gap-5 mt-5">
+        {/* Footer: socials inline + rocket */}
+        <footer id="contact" className="mt-24">
+          <div className="flex items-center gap-5">
             <a
               href="https://github.com/priyansh-x"
               target="_blank"
@@ -123,16 +127,10 @@ const Index = () => {
             >
               <MailIcon />
             </a>
+            <a href="#" className="link-inline text-sm ml-2">{t.resume[lang]} →</a>
           </div>
 
-          <p className="mt-5">
-            <a href="#" className="link-inline">{t.resume[lang]} →</a>
-          </p>
-        </section>
-
-        {/* Rocket footer */}
-        <footer className="mt-24">
-          <p className="text-[12px]" style={{ color: "hsl(var(--hover-line))" }}>
+          <p className="text-[12px] mt-6" style={{ color: "hsl(var(--hover-line))" }}>
             {t.rocket[lang]}
           </p>
         </footer>

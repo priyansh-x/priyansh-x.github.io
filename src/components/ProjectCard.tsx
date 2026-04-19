@@ -6,32 +6,33 @@ interface Props {
 }
 
 const ProjectCard = ({ name, description, status, url }: Props) => {
+  const arrowClasses = "text-sm shrink-0 transition-opacity";
   return (
-    <article className="card-min p-5 relative">
-      <div className="flex items-start justify-between gap-4">
-        <div className="flex-1 min-w-0">
-          <h3 className="text-foreground font-normal">
-            {name}
-            {status && <span className="text-faint ml-2 text-sm font-light">· {status}</span>}
-          </h3>
-          <p className="text-mute text-sm mt-1 leading-relaxed">{description}</p>
-        </div>
+    <article>
+      <div className="flex items-baseline justify-between gap-4">
+        <h3 className="text-foreground font-medium">
+          {name}
+          {status && (
+            <span className="text-faint ml-2 text-sm font-light">· {status}</span>
+          )}
+        </h3>
         {url ? (
           <a
             href={url}
             target="_blank"
             rel="noopener noreferrer"
-            className="link-inline text-sm shrink-0"
+            className={`link-inline ${arrowClasses}`}
             aria-label={`Open ${name}`}
           >
             ↗
           </a>
         ) : (
-          <span className="text-faint text-sm shrink-0" aria-label="Coming soon">
+          <span className={`text-faint ${arrowClasses}`} aria-label="Coming soon">
             ↗
           </span>
         )}
       </div>
+      <p className="text-mute text-sm mt-1 leading-relaxed">{description}</p>
     </article>
   );
 };
