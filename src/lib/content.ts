@@ -83,4 +83,5 @@ export const t = {
   rocket: { en: "↑ still launching", hi: "↑ अभी उड़ान पर" },
   comingSoon: { en: "coming soon", hi: "जल्द आ रहा है" },
   back: { en: "← back", hi: "← वापस" },
+  location: { en: "Bangalore", hi: "बेंगलुरु" },
 } as const;
