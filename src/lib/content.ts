@@ -53,8 +53,13 @@ export const t = {
   fullName: { en: "Priyansh Joshi", hi: "प्रियांश जोशी" },
   belovedPart: { en: "beloved part", hi: "प्रिय अंश" },
   bioStart: {
-    en: "First-year electrical engineering student at BITS Pilani. Working at Conquest, India's largest student-run startup accelerator. See my ",
-    hi: "BITS पिलानी में इलेक्ट्रिकल इंजीनियरिंग का प्रथम वर्ष का छात्र। Conquest — भारत के सबसे बड़े छात्र-संचालित स्टार्टअप एक्सेलरेटर — में काम कर रहा हूँ। मेरे ",
+    en: "First-year electrical engineering student at BITS Pilani. Working at ",
+    hi: "BITS पिलानी में इलेक्ट्रिकल इंजीनियरिंग का प्रथम वर्ष का छात्र। ",
+  },
+  conquestLink: { en: "Conquest", hi: "Conquest" },
+  bioAfterConquest: {
+    en: ", India's largest student-run startup accelerator. See my ",
+    hi: " — भारत के सबसे बड़े छात्र-संचालित स्टार्टअप एक्सेलरेटर — में काम कर रहा हूँ। मेरे ",
   },
   projectsLink: { en: "projects", hi: "प्रोजेक्ट्स" },
   bioMid: { en: ", read ", hi: " देखें, " },
