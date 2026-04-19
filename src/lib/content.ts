@@ -5,31 +5,24 @@ export type Lang = "en" | "hi";
 export const projects = [
   {
     name: "Sloppy",
-    status: "in progress",
-    descEn: "An AI video social platform where your feed is generated, not curated.",
-    descHi: "एक AI वीडियो सोशल प्लेटफ़ॉर्म जहाँ आपका फ़ीड क्यूरेट नहीं, जनरेट होता है।",
+    status: "active",
+    descEn: "Your feed, generated not curated. Sloppy is an AI video social platform that builds a personalised stream from scratch — no follower graphs, no engagement bait, just content that fits where you are right now.",
+    descHi: "आपका फ़ीड — क्यूरेट नहीं, जनरेट किया हुआ। Sloppy एक AI वीडियो सोशल प्लेटफ़ॉर्म है जो आपकी पर्सनलाइज़्ड स्ट्रीम शून्य से बनाता है — न फ़ॉलोअर ग्राफ़, न एंगेजमेंट बेट, बस वही कंटेंट जो आपकी अभी की जगह से मेल खाए।",
     url: null,
   },
   {
     name: "Mnemos",
-    status: null,
-    descEn: "Transforms audio onsets into rhythmic spikes in an E/I neural network, visualised in real time.",
-    descHi: "ऑडियो को E/I न्यूरल नेटवर्क में लयबद्ध स्पाइक्स में बदलता है, रियल-टाइम में विज़ुअलाइज़ किया गया।",
+    status: "shipped",
+    descEn: "An interactive application that transforms audio onsets into rhythmic spikes inside an E/I neural network, visualised live through synced rasters, traces, and browser animations.",
+    descHi: "एक इंटरैक्टिव ऐप्लिकेशन जो ऑडियो ऑनसेट्स को E/I न्यूरल नेटवर्क के अंदर लयबद्ध स्पाइक्स में बदलता है — सिंक्ड रास्टर्स, ट्रेसेस और ब्राउज़र एनिमेशन के ज़रिए लाइव विज़ुअलाइज़्ड।",
     url: "https://github.com/priyansh-x/Mnemos",
   },
   {
-    name: "Nirogi AI",
-    status: null,
-    descEn: "Converting unstructured medical PDFs into structured, EHR-ready formats.",
-    descHi: "असंरचित मेडिकल PDFs को संरचित, EHR-तैयार फ़ॉर्मेट में बदलता है।",
-    url: "https://nirogi-ai.vercel.app/",
-  },
-  {
-    name: "DeHack Website",
-    status: null,
-    descEn: "Website for BITS Pilani's flagship hackathon, with education modules and real-time logistics.",
-    descHi: "BITS पिलानी के प्रमुख हैकाथॉन की वेबसाइट — शिक्षा मॉड्यूल और रियल-टाइम लॉजिस्टिक्स के साथ।",
-    url: "https://dehack.vercel.app",
+    name: "NeuralX",
+    status: "active",
+    descEn: "An AI-native research tool that sits between you and the literature — surfaces what's relevant, connects what's related, and gets out of the way. Built for people who think faster than they can read.",
+    descHi: "एक AI-नेटिव रिसर्च टूल जो आपके और साहित्य के बीच बैठता है — जो प्रासंगिक है उसे सामने लाता है, जो जुड़ा है उसे जोड़ता है, और बीच में नहीं आता। उन लोगों के लिए जो पढ़ने से तेज़ सोचते हैं।",
+    url: null,
   },
 ] as const;
 
@@ -57,13 +50,11 @@ export const quotes = [
 ] as const;
 
 export const t = {
-  tagline: {
-    en: "I believe technology is the most powerful lever we have to help people — and that's what I'm here to build.",
-    hi: "मेरा मानना है कि तकनीक सबसे शक्तिशाली माध्यम है जिससे हम लोगों की मदद कर सकते हैं — और यही मैं बनाने आया हूँ।",
-  },
+  fullName: { en: "Priyansh Joshi", hi: "प्रियांश जोशी" },
+  belovedPart: { en: "beloved part", hi: "प्रिय अंश" },
   bioStart: {
-    en: "First-year EEE student at BITS Pilani. Running growth and tech at Conquest — India's largest student-run startup accelerator. Building Sloppy, an AI video social platform. JEE '25: 99.4%ile. Interested in rockets, startups, and what comes next. See my ",
-    hi: "BITS पिलानी में EEE प्रथम वर्ष का छात्र। Conquest — भारत के सबसे बड़े छात्र-संचालित स्टार्टअप एक्सेलरेटर — में ग्रोथ और टेक संभाल रहा हूँ। Sloppy बना रहा हूँ, एक AI वीडियो सोशल प्लेटफ़ॉर्म। JEE '25: 99.4%ile। रॉकेट्स, स्टार्टअप्स और आगे क्या आएगा — इसमें रुचि। मेरे ",
+    en: "First-year electrical engineering student at BITS Pilani. Working at Conquest, India's largest student-run startup accelerator. See my ",
+    hi: "BITS पिलानी में इलेक्ट्रिकल इंजीनियरिंग का प्रथम वर्ष का छात्र। Conquest — भारत के सबसे बड़े छात्र-संचालित स्टार्टअप एक्सेलरेटर — में काम कर रहा हूँ। मेरे ",
   },
   projectsLink: { en: "projects", hi: "प्रोजेक्ट्स" },
   bioMid: { en: ", read ", hi: " देखें, " },
@@ -71,21 +62,20 @@ export const t = {
   bioEnd: { en: ", or ", hi: " पढ़ें, या " },
   contactLink: { en: "get in touch", hi: "संपर्क करें" },
   bioFinal: { en: ".", hi: "।" },
-  sectionProjects: { en: "projects", hi: "प्रोजेक्ट्स" },
+  sectionAbout: { en: "about", hi: "परिचय" },
+  aboutPara: {
+    en: "I'm drawn to things that move fast and matter — rockets, startups, AI, the messy overlap between all three. I got into engineering because I wanted to understand how things work. I stayed because I realised building things is the closest you can get to changing them. Outside of that, I follow Formula 1 probably more seriously than I should, read whatever I can get my hands on, and spend a lot of time thinking about what the next ten years of technology actually look like for people who aren't already in the room.",
+    hi: "मुझे वो चीज़ें खींचती हैं जो तेज़ चलती हैं और मायने रखती हैं — रॉकेट्स, स्टार्टअप्स, AI, और इन तीनों के बीच का बिखरा हुआ ओवरलैप। इंजीनियरिंग में इसलिए आया क्योंकि समझना चाहता था कि चीज़ें कैसे काम करती हैं। टिका इसलिए क्योंकि एहसास हुआ कि चीज़ें बनाना उन्हें बदलने के सबसे क़रीब है। इसके अलावा, Formula 1 शायद ज़रूरत से ज़्यादा गंभीरता से देखता हूँ, जो हाथ लगे पढ़ता हूँ, और बहुत सारा वक़्त इस सोच में बिताता हूँ कि अगले दस साल की तकनीक उन लोगों के लिए असल में कैसी दिखेगी जो अभी उस कमरे में नहीं हैं।",
+  },
+  sectionProjects: { en: "Projects", hi: "प्रोजेक्ट्स" },
   sectionWriting: { en: "LogX", hi: "LogX" },
   writingSub: {
     en: "Unfiltered writing. Personal, technical, and everything between.",
     hi: "बिना फ़िल्टर के लेखन। निजी, तकनीकी, और बीच का सब कुछ।",
-  },
-  sectionContact: { en: "contact", hi: "संपर्क" },
-  contactLine: {
-    en: "Open to interesting conversations, collaborations, and opportunities.",
-    hi: "दिलचस्प बातचीत, सहयोग और अवसरों के लिए हमेशा खुला।",
   },
   resume: { en: "resume", hi: "रिज़्यूमे" },
   toggleLabel: { en: "हिंदी", hi: "English" },
   rocket: { en: "↑ still launching", hi: "↑ अभी उड़ान पर" },
   comingSoon: { en: "coming soon", hi: "जल्द आ रहा है" },
   back: { en: "← back", hi: "← वापस" },
-  inProgress: { en: "in progress", hi: "जारी है" },
 } as const;
