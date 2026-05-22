@@ -41,6 +41,23 @@ export const posts = [
   },
 ] as const;
 
+export const postContent: Record<string, string[]> = {
+  "the-chinese-farmer": [
+    "There is an old story about a Chinese farmer that I keep coming back to.",
+    "The farmer lived with his only son, and together they worked their land with one horse. One day, the son forgot to lock the stable, and the horse ran away. The neighbours came by and said, what terrible luck. The farmer said, maybe yes, maybe no.",
+    "The next day, the horse returned with six wild horses. The neighbours came by and said, what wonderful luck. The farmer said, maybe yes, maybe no.",
+    "The day after that, the son was trying to break in one of the wild horses, fell, and broke his leg. The neighbours came by and said, what terrible luck. The farmer said, maybe yes, maybe no.",
+    "The next day, soldiers arrived to draft every young man in the village into a war they were almost certain to die in. They passed over the son because of his broken leg. The neighbours came by and said, what wonderful luck. The farmer said, maybe yes, maybe no.",
+    "That is the whole story. Nothing fancy, no big reveal at the end.",
+    "What I take from it is pretty simple. We almost never know what something means in the moment. The thing that feels like a disaster today often turns out to be the reason something good happens later, and the thing that feels like a win sometimes sets up a problem we did not see coming. We are very confident, very fast, about labelling events good or bad, and most of the time we are just guessing.",
+    "I keep returning to this story whenever something happens in my life that feels heavy. A rejection, a plan falling apart, something not going the way I wanted it to. And every time, I remind myself that I genuinely do not know yet. It is not good. It is not bad. It is just a thing that happened, and life still has to play out.",
+    "There is a strange freedom in that. If I cannot really tell whether something is good or bad in the moment, then the most reasonable thing I can do is stay steady, stay curious, and assume it is all going to work out in some form I cannot see yet. Not in a forced, fake positive way. More like a quiet trust that the story is not over.",
+    "So whenever something happens, good or bad, I try to remember the farmer and say to myself, maybe yes, maybe no. And then I keep going.",
+  ],
+  "trekking-everest-base-camp": [],
+};
+
+
 export const quotes = [
   { textEn: "The only way to do great work is to love what you do.", textHi: "महान काम करने का एकमात्र तरीका है — जो आप करते हैं, उससे प्रेम करना।", author: "Steve Jobs" },
   { textEn: "Study hard what interests you the most in the most undisciplined, irreverent and original manner possible.", textHi: "जो आपको सबसे ज़्यादा रुचिकर लगे, उसे सबसे अनुशासनहीन, बेधड़क और मौलिक तरीक़े से पढ़ें।", author: "Richard Feynman" },
