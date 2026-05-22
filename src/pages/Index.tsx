@@ -25,6 +25,12 @@ const MailIcon = () => (
   </svg>
 );
 
+const MonkeytypeIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M3 8h4v2H5v4h2v2H3V8zm6 0h6v2h-2v6h-2v-6H9V8zm8 0h4v8h-2v-2h-2v2h-2V8h2v4h2v-2h-2V8z"/>
+  </svg>
+);
+
 const Index = () => {
   const { lang } = useLang();
 
@@ -43,7 +49,8 @@ const Index = () => {
 
           <p className="text-foreground leading-relaxed">
             I believe technology is the most powerful tool we have to{" "}
-            <strong className="font-semibold">help</strong> people, and that's what I'm here to build.
+            <strong className="font-semibold">help</strong>{" "}
+            <strong className="font-semibold">people</strong>, and that's what I'm here to build.
           </p>
 
           <p className="text-mute mt-6 leading-relaxed">
@@ -152,6 +159,15 @@ const Index = () => {
               className="text-foreground hover:opacity-60 transition-opacity"
             >
               <MailIcon />
+            </a>
+            <a
+              href="https://monkeytype.com/profile/PriyanshX"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Monkeytype"
+              className="text-foreground hover:opacity-60 transition-opacity"
+            >
+              <MonkeytypeIcon />
             </a>
             <a href="#" className="link-inline text-sm ml-2">{t.resume[lang]} →</a>
           </div>
