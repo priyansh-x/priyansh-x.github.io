@@ -10,14 +10,14 @@ const NameHover = () => {
 
   return (
     <div className="mb-2">
-      <h1 className="text-2xl font-normal cursor-default">
+      <h1 className="text-5xl sm:text-6xl font-normal tracking-tight cursor-default">
         {fullName}
         <button
           type="button"
           onClick={() => setRevealed((r) => !r)}
           aria-label="Reveal name meaning"
           aria-expanded={revealed}
-          className="ml-1 align-super text-sm text-mute hover:text-foreground transition-colors focus:outline-none"
+          className="ml-1 align-super text-base text-mute hover:text-foreground transition-colors focus:outline-none"
         >
           *
         </button>
