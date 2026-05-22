@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import { posts, t } from "@/lib/content";
+import { posts, postContent, t } from "@/lib/content";
 import { useLang } from "@/contexts/LangContext";
 import LangToggle from "@/components/LangToggle";
 import { useEffect } from "react";
