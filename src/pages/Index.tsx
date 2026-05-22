@@ -160,6 +160,15 @@ const Index = () => {
             >
               <MailIcon />
             </a>
+            <a
+              href="https://monkeytype.com/profile/PriyanshX"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Monkeytype"
+              className="text-foreground hover:opacity-60 transition-opacity"
+            >
+              <MonkeytypeIcon />
+            </a>
             <a href="#" className="link-inline text-sm ml-2">{t.resume[lang]} →</a>
           </div>
 
