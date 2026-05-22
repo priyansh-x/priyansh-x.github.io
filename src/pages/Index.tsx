@@ -43,7 +43,8 @@ const Index = () => {
 
           <p className="text-foreground leading-relaxed">
             I believe technology is the most powerful tool we have to{" "}
-            <strong className="font-semibold">help</strong> people, and that's what I'm here to build.
+            <strong className="font-semibold">help</strong>{" "}
+            <strong className="font-semibold">people</strong>, and that's what I'm here to build.
           </p>
 
           <p className="text-mute mt-6 leading-relaxed">
