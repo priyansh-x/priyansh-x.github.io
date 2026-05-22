@@ -37,7 +37,7 @@ const Index = () => {
         <section aria-label="Intro">
           <NameHover />
 
-          <p className="text-faint text-sm italic mb-6 -mt-4">
+          <p className="text-mute text-base mb-8">
             {t.location[lang]}, <span aria-label="India">🇮🇳</span>
           </p>
 
@@ -47,7 +47,16 @@ const Index = () => {
           </p>
 
           <p className="text-mute mt-6 leading-relaxed">
-            {t.bioStart[lang]}
+            {t.bioIntern[lang]}
+            <a
+              href="https://www.samora.ai/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-inline"
+            >
+              {t.samoraLink[lang]}
+            </a>
+            {t.bioSamoraDesc[lang]}
             <a
               href="https://www.conquestbits.org/"
               target="_blank"
@@ -57,11 +66,15 @@ const Index = () => {
               {t.conquestLink[lang]}
             </a>
             {t.bioAfterConquest[lang]}
+          </p>
+
+          <p className="text-mute mt-4 leading-relaxed">
+            {t.bioSeeStart[lang]}
             <a href="#projects" className="link-inline">{t.projectsLink[lang]}</a>
             {t.bioMid[lang]}
             <a href="#logx" className="link-inline">{t.logxLink[lang]}</a>
             {t.bioEnd[lang]}
-            <a href="#contact" className="link-inline">{t.contactLink[lang]}</a>
+            <a href="mailto:f20250479@pilani.bits-pilani.ac.in" className="link-inline">{t.contactLink[lang]}</a>
             {t.bioFinal[lang]}
           </p>
 
