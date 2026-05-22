@@ -25,6 +25,12 @@ const MailIcon = () => (
   </svg>
 );
 
+const MonkeytypeIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M3 8h4v2H5v4h2v2H3V8zm6 0h6v2h-2v6h-2v-6H9V8zm8 0h4v8h-2v-2h-2v2h-2V8h2v4h2v-2h-2V8z"/>
+  </svg>
+);
+
 const Index = () => {
   const { lang } = useLang();
 
