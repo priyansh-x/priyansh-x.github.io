@@ -36,7 +36,15 @@ const LogXPost = () => {
             {lang === "en" ? post.titleEn : post.titleHi}
           </h1>
           <p className="text-faint text-sm mb-16">{post.year}</p>
-          <p className="text-mute italic">[{t.comingSoon[lang]}]</p>
+          {postContent[post.slug] && postContent[post.slug].length > 0 ? (
+            <div className="space-y-6 text-foreground leading-relaxed">
+              {postContent[post.slug].map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
+            </div>
+          ) : (
+            <p className="text-mute italic">[{t.comingSoon[lang]}]</p>
+          )}
         </article>
         <Link to="/" className="link-inline mt-24 inline-block text-sm">
           {t.back[lang]}
