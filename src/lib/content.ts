@@ -28,9 +28,9 @@ export const projects = [
 
 export const posts = [
   {
-    slug: "first-year-at-bits-pilani",
-    titleEn: "First year at BITS Pilani",
-    titleHi: "BITS पिलानी का पहला साल",
+    slug: "the-chinese-farmer",
+    titleEn: "The Chinese Farmer",
+    titleHi: "चीनी किसान की कहानी",
     year: "2025",
   },
   {
