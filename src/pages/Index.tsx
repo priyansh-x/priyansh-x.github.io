@@ -31,6 +31,13 @@ const MonkeytypeIcon = () => (
   </svg>
 );
 
+const XIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M18.244 2H21.5l-7.5 8.572L22.5 22h-6.844l-5.36-7.01L4.16 22H.9l8.02-9.166L.5 2h7.02l4.84 6.39L18.244 2zm-1.2 18h1.86L7.04 4H5.06l11.984 16z"/>
+  </svg>
+);
+
+
 const Index = () => {
   const { lang } = useLang();
 
@@ -169,12 +176,28 @@ const Index = () => {
             >
               <MonkeytypeIcon />
             </a>
+            <a
+              href="https://x.com/otziiz"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="X"
+              className="text-foreground hover:opacity-60 transition-opacity"
+            >
+              <XIcon />
+            </a>
             <a href="#" className="link-inline text-sm ml-2">{t.resume[lang]} →</a>
           </div>
 
-          <p className="text-[12px] mt-6" style={{ color: "hsl(var(--hover-line))" }}>
-            {t.rocket[lang]}
-          </p>
+          <button
+            type="button"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="text-[12px] mt-6 hover:opacity-70 transition-opacity cursor-pointer bg-transparent border-0 p-0"
+            style={{ color: "hsl(var(--hover-line))" }}
+            aria-label="Back to top"
+          >
+            🚀 {t.rocket[lang].replace(/^↑\s*/, "")}
+          </button>
+
         </footer>
       </main>
     </div>
