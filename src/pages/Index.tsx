@@ -176,12 +176,28 @@ const Index = () => {
             >
               <MonkeytypeIcon />
             </a>
+            <a
+              href="https://x.com/otziiz"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="X"
+              className="text-foreground hover:opacity-60 transition-opacity"
+            >
+              <XIcon />
+            </a>
             <a href="#" className="link-inline text-sm ml-2">{t.resume[lang]} →</a>
           </div>
 
-          <p className="text-[12px] mt-6" style={{ color: "hsl(var(--hover-line))" }}>
-            {t.rocket[lang]}
-          </p>
+          <button
+            type="button"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="text-[12px] mt-6 hover:opacity-70 transition-opacity cursor-pointer bg-transparent border-0 p-0"
+            style={{ color: "hsl(var(--hover-line))" }}
+            aria-label="Back to top"
+          >
+            🚀 {t.rocket[lang].replace(/^↑\s*/, "")}
+          </button>
+
         </footer>
       </main>
     </div>
