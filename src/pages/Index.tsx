@@ -31,6 +31,13 @@ const MonkeytypeIcon = () => (
   </svg>
 );
 
+const XIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M18.244 2H21.5l-7.5 8.572L22.5 22h-6.844l-5.36-7.01L4.16 22H.9l8.02-9.166L.5 2h7.02l4.84 6.39L18.244 2zm-1.2 18h1.86L7.04 4H5.06l11.984 16z"/>
+  </svg>
+);
+
+
 const Index = () => {
   const { lang } = useLang();
 
