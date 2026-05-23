@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface LaunchData {
   provider: string;
@@ -11,23 +11,23 @@ interface LaunchData {
 
 const CACHE_KEY = "nextLaunch";
 const CACHE_TTL_MS = 30 * 60 * 1000;
+// Pull a handful and filter to truly-future entries client-side — the
+// upcoming endpoint can still include launches that just lifted off.
 const ENDPOINT =
-  "https://ll.thespacedevs.com/2.2.0/launch/upcoming/?limit=1";
+  "https://ll.thespacedevs.com/2.2.0/launch/upcoming/?limit=5";
 
 function pad2(n: number): string {
   return n.toString().padStart(2, "0");
 }
 
 function formatTMinus(iso: string): string {
-  const totalSec = Math.floor((new Date(iso).getTime() - Date.now()) / 1000);
-  const sign = totalSec >= 0 ? "T-" : "T+";
-  const abs = Math.abs(totalSec);
-  const days = Math.floor(abs / 86_400);
-  const hours = Math.floor((abs % 86_400) / 3_600);
-  const mins = Math.floor((abs % 3_600) / 60);
-  const secs = abs % 60;
+  const totalSec = Math.max(0, Math.floor((new Date(iso).getTime() - Date.now()) / 1000));
+  const days = Math.floor(totalSec / 86_400);
+  const hours = Math.floor((totalSec % 86_400) / 3_600);
+  const mins = Math.floor((totalSec % 3_600) / 60);
+  const secs = totalSec % 60;
   const clock = `${pad2(hours)}:${pad2(mins)}:${pad2(secs)}`;
-  return days > 0 ? `${sign}${days}d ${clock}` : `${sign}${clock}`;
+  return days > 0 ? `T-${days}d ${clock}` : `T-${clock}`;
 }
 
 function shortenMission(name: string): string {
@@ -47,62 +47,80 @@ const NextLaunch = () => {
   const [data, setData] = useState<LaunchData | null>(null);
   const [, setTick] = useState(0);
 
-  useEffect(() => {
-    let cancelled = false;
+  const load = useCallback(async () => {
+    const now = Date.now();
 
-    const load = async () => {
-      try {
-        const raw = localStorage.getItem(CACHE_KEY);
-        if (raw) {
-          const cached = JSON.parse(raw);
-          if (Date.now() - cached.ts < CACHE_TTL_MS) {
-            if (!cancelled) setData(cached.data);
-            return;
-          }
+    try {
+      const raw = localStorage.getItem(CACHE_KEY);
+      if (raw) {
+        const cached = JSON.parse(raw);
+        const cachedNet = cached?.data?.net
+          ? new Date(cached.data.net).getTime()
+          : 0;
+        const fresh = now - cached.ts < CACHE_TTL_MS;
+        const stillFuture = cachedNet > now;
+        if (fresh && stillFuture) {
+          setData(cached.data);
+          return;
         }
-      } catch {
-        /* fall through */
       }
+    } catch {
+      /* fall through to fetch */
+    }
 
+    try {
+      const res = await fetch(ENDPOINT);
+      if (!res.ok) return;
+      const json = await res.json();
+      // First result that is genuinely in the future.
+      const r = (json.results ?? []).find(
+        (entry: { net?: string }) =>
+          entry?.net && new Date(entry.net).getTime() > Date.now(),
+      );
+      if (!r) return;
+      const next: LaunchData = {
+        provider: r.launch_service_provider?.name ?? "—",
+        mission: shortenMission(r.name ?? ""),
+        net: r.net,
+        pad: shortenPad(r.pad?.location?.name),
+        infoUrl: r.infoURLs?.[0]?.url ?? null,
+        videoUrl: r.vidURLs?.[0]?.url ?? null,
+      };
       try {
-        const res = await fetch(ENDPOINT);
-        if (!res.ok) return;
-        const json = await res.json();
-        const r = json.results?.[0];
-        if (!r) return;
-        const fresh: LaunchData = {
-          provider: r.launch_service_provider?.name ?? "—",
-          mission: shortenMission(r.name ?? ""),
-          net: r.net,
-          pad: shortenPad(r.pad?.location?.name),
-          infoUrl: r.infoURLs?.[0]?.url ?? null,
-          videoUrl: r.vidURLs?.[0]?.url ?? null,
-        };
-        try {
-          localStorage.setItem(
-            CACHE_KEY,
-            JSON.stringify({ ts: Date.now(), data: fresh }),
-          );
-        } catch {
-          /* ignore quota */
-        }
-        if (!cancelled) setData(fresh);
+        localStorage.setItem(
+          CACHE_KEY,
+          JSON.stringify({ ts: Date.now(), data: next }),
+        );
       } catch {
-        /* silent */
+        /* ignore quota */
       }
-    };
-
-    load();
-    return () => {
-      cancelled = true;
-    };
+      setData(next);
+    } catch {
+      /* silent */
+    }
   }, []);
 
   useEffect(() => {
+    load();
+  }, [load]);
+
+  useEffect(() => {
     if (!data) return;
-    const id = setInterval(() => setTick((n) => n + 1), 1000);
+    const id = setInterval(() => {
+      const launchPassed = new Date(data.net).getTime() <= Date.now();
+      if (launchPassed) {
+        try {
+          localStorage.removeItem(CACHE_KEY);
+        } catch {
+          /* ignore */
+        }
+        load();
+      } else {
+        setTick((n) => n + 1);
+      }
+    }, 1000);
     return () => clearInterval(id);
-  }, [data]);
+  }, [data, load]);
 
   if (!data) return null;
 
