@@ -190,14 +190,9 @@ const Index = () => {
             >
               <XIcon />
             </a>
-            <a
-              href="https://drive.google.com/file/d/11D8JVpeIxQPxAVDVrFmwnt5D2bhjM9Ms/view?usp=sharing"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="link-inline text-sm ml-2"
-            >
+            <Link to="/resume" className="link-inline text-sm ml-2">
               {t.resume[lang]} →
-            </a>
+            </Link>
           </div>
 
           <RocketLaunch />
