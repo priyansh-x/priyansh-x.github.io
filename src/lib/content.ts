@@ -32,12 +32,14 @@ export const posts = [
     titleEn: "The Chinese Farmer",
     titleHi: "चीनी किसान की कहानी",
     year: "2025",
+    date: "2026-05-23",
   },
   {
     slug: "trekking-everest-base-camp",
     titleEn: "Trekking Everest Base Camp",
     titleHi: "एवरेस्ट बेस कैंप ट्रेक",
     year: "2025",
+    date: null,
   },
 ] as const;
 

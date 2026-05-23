@@ -1,9 +1,12 @@
 import LangToggle from "@/components/LangToggle";
 import NameHover from "@/components/NameHover";
+import NextLaunch from "@/components/NextLaunch";
 import QuoteOnLoad from "@/components/QuoteOnLoad";
+import RocketLaunch from "@/components/RocketLaunch";
 import ProjectCard from "@/components/ProjectCard";
 import { useLang } from "@/contexts/LangContext";
 import { posts, projects, t } from "@/lib/content";
+import { formatDate } from "@/lib/utils";
 import { Link } from "react-router-dom";
 
 const GitHubIcon = () => (
@@ -133,7 +136,9 @@ const Index = () => {
                 <Link to={`/logx/${post.slug}`} className="link-inline">
                   {lang === "en" ? post.titleEn : post.titleHi}
                 </Link>
-                <span className="text-faint text-sm shrink-0">{post.year}</span>
+                <span className="text-faint text-sm shrink-0">
+                  {post.date ? formatDate(post.date, lang) : post.year}
+                </span>
               </li>
             ))}
           </ul>
@@ -185,18 +190,18 @@ const Index = () => {
             >
               <XIcon />
             </a>
-            <a href="#" className="link-inline text-sm ml-2">{t.resume[lang]} →</a>
+            <a
+              href="https://drive.google.com/file/d/11D8JVpeIxQPxAVDVrFmwnt5D2bhjM9Ms/view?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-inline text-sm ml-2"
+            >
+              {t.resume[lang]} →
+            </a>
           </div>
 
-          <button
-            type="button"
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="text-[12px] mt-6 hover:opacity-70 transition-opacity cursor-pointer bg-transparent border-0 p-0"
-            style={{ color: "hsl(var(--hover-line))" }}
-            aria-label="Back to top"
-          >
-            🚀 {t.rocket[lang].replace(/^↑\s*/, "")}
-          </button>
+          <RocketLaunch />
+          <NextLaunch />
 
         </footer>
       </main>

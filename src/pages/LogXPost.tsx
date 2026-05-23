@@ -2,7 +2,10 @@ import { Link, useParams } from "react-router-dom";
 import { posts, postContent, t } from "@/lib/content";
 import { useLang } from "@/contexts/LangContext";
 import LangToggle from "@/components/LangToggle";
+import { formatDate } from "@/lib/utils";
 import { useEffect } from "react";
+
+const WORDS_PER_MIN = 220;
 
 const LogXPost = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -27,6 +30,18 @@ const LogXPost = () => {
     );
   }
 
+  const paragraphs = postContent[post.slug] ?? [];
+  const wordCount = paragraphs.reduce(
+    (n, p) => n + p.trim().split(/\s+/).filter(Boolean).length,
+    0,
+  );
+  const minutes = Math.max(1, Math.round(wordCount / WORDS_PER_MIN));
+  const meta: string[] = [];
+  if (post.date) meta.push(formatDate(post.date, lang));
+  if (wordCount > 0) {
+    meta.push(lang === "en" ? `~${minutes} min read` : `~${minutes} मिनट का पठन`);
+  }
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <LangToggle />
@@ -35,10 +50,12 @@ const LogXPost = () => {
           <h1 className="text-2xl font-normal mb-2">
             {lang === "en" ? post.titleEn : post.titleHi}
           </h1>
-          <p className="text-faint text-sm mb-16">{post.year}</p>
-          {postContent[post.slug] && postContent[post.slug].length > 0 ? (
+          <p className="text-faint text-sm mb-16">
+            {meta.length > 0 ? meta.join(" · ") : post.year}
+          </p>
+          {paragraphs.length > 0 ? (
             <div className="space-y-6 text-foreground leading-relaxed">
-              {postContent[post.slug].map((para, i) => (
+              {paragraphs.map((para, i) => (
                 <p key={i}>{para}</p>
               ))}
             </div>
