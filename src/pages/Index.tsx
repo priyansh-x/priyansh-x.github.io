@@ -64,7 +64,16 @@ const Index = () => {
           </p>
 
           <p className="text-mute mt-6 leading-relaxed">
-            {t.bioIntern[lang]}
+            {t.bioBeforeBits[lang]}
+            <a
+              href="https://www.bits-pilani.ac.in/pilani/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-inline"
+            >
+              {t.bitsLink[lang]}
+            </a>
+            {t.bioAfterBits[lang]}
             <a
               href="https://www.samora.ai/"
               target="_blank"

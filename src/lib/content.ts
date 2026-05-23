@@ -75,9 +75,14 @@ export const t = {
     en: "* Priyansh (प्रिय) = beloved, Ansh (अंश) = part",
     hi: "* प्रिय = beloved, अंश = part",
   },
-  bioIntern: {
-    en: "First-year electrical engineering student at BITS Pilani. Currently a generalist intern at ",
-    hi: "BITS पिलानी में इलेक्ट्रिकल इंजीनियरिंग का प्रथम वर्ष का छात्र। फ़िलहाल ",
+  bioBeforeBits: {
+    en: "First-year electrical engineering student at ",
+    hi: "",
+  },
+  bitsLink: { en: "BITS Pilani", hi: "BITS पिलानी" },
+  bioAfterBits: {
+    en: ". Currently a generalist intern at ",
+    hi: " में इलेक्ट्रिकल इंजीनियरिंग का प्रथम वर्ष का छात्र। फ़िलहाल ",
   },
   samoraLink: { en: "Samora AI (YC W26)", hi: "Samora AI (YC W26)" },
   bioSamoraDesc: {
