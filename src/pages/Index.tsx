@@ -1,3 +1,4 @@
+import CurrentlyStrip from "@/components/CurrentlyStrip";
 import LangToggle from "@/components/LangToggle";
 import NameHover from "@/components/NameHover";
 import NextLaunch from "@/components/NextLaunch";
@@ -105,6 +106,7 @@ const Index = () => {
           </p>
 
           <QuoteOnLoad />
+          <CurrentlyStrip />
         </section>
 
         {/* About */}
