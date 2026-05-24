@@ -1,4 +1,3 @@
-import CurrentlyStrip from "@/components/CurrentlyStrip";
 import LangToggle from "@/components/LangToggle";
 import NameHover from "@/components/NameHover";
 import NextLaunch from "@/components/NextLaunch";
@@ -9,6 +8,20 @@ import { useLang } from "@/contexts/LangContext";
 import { posts, projects, t } from "@/lib/content";
 import { formatDate } from "@/lib/utils";
 import { Link } from "react-router-dom";
+
+// Inline org mark — small square next to the link text. Sits on the
+// text baseline; explicit dims so the line height stays stable.
+const OrgMark = ({ src, alt }: { src: string; alt: string }) => (
+  <img
+    src={src}
+    alt={alt}
+    width={14}
+    height={14}
+    className="inline-block align-text-bottom mr-1.5"
+    loading="lazy"
+    style={{ verticalAlign: "-2px" }}
+  />
+);
 
 const GitHubIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -70,8 +83,9 @@ const Index = () => {
               href="https://www.bits-pilani.ac.in/pilani/"
               target="_blank"
               rel="noopener noreferrer"
-              className="link-inline"
+              className="link-inline whitespace-nowrap"
             >
+              <OrgMark src="/logos/bits.png" alt="" />
               {t.bitsLink[lang]}
             </a>
             {t.bioAfterBits[lang]}
@@ -79,8 +93,9 @@ const Index = () => {
               href="https://www.samora.ai/"
               target="_blank"
               rel="noopener noreferrer"
-              className="link-inline"
+              className="link-inline whitespace-nowrap"
             >
+              <OrgMark src="/logos/samora.png" alt="" />
               {t.samoraLink[lang]}
             </a>
             {t.bioSamoraDesc[lang]}
@@ -88,8 +103,9 @@ const Index = () => {
               href="https://www.conquestbits.org/"
               target="_blank"
               rel="noopener noreferrer"
-              className="link-inline"
+              className="link-inline whitespace-nowrap"
             >
+              <OrgMark src="/logos/conquest.png" alt="" />
               {t.conquestLink[lang]}
             </a>
             {t.bioAfterConquest[lang]}
@@ -106,7 +122,6 @@ const Index = () => {
           </p>
 
           <QuoteOnLoad />
-          <CurrentlyStrip />
         </section>
 
         {/* About */}
