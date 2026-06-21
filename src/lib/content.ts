@@ -4,25 +4,31 @@ export type Lang = "en" | "hi";
 
 export const projects = [
   {
+    name: "DevStats",
+    status: "shipped",
+    descEn: "Telemetry and leaderboard for AI coding tools. Track tokens, sessions and streaks across Claude Code, Cursor, Codex, Windsurf and Antigravity. Private by default.",
+    descHi: "AI कोडिंग टूल्स के लिए टेलीमेट्री और लीडरबोर्ड। Claude Code, Cursor, Codex, Windsurf और Antigravity में टोकन, सेशन और स्ट्रीक ट्रैक करें। डिफ़ॉल्ट रूप से प्राइवेट।",
+    url: "https://github.com/priyansh-x/devstats",
+    longDescEn: "DevStats is a telemetry and leaderboard platform for AI coding tools. It tracks tokens, sessions and streaks across Claude Code, Cursor, Codex, Windsurf and Antigravity. Everything is private by default. Built with Next.js and TypeScript.",
+    longDescHi: "DevStats AI कोडिंग टूल्स के लिए एक टेलीमेट्री और लीडरबोर्ड प्लेटफ़ॉर्म है। यह Claude Code, Cursor, Codex, Windsurf और Antigravity में टोकन, सेशन और स्ट्रीक ट्रैक करता है। सब कुछ डिफ़ॉल्ट रूप से प्राइवेट है। Next.js और TypeScript से बना।",
+  },
+  {
     name: "Sloppy",
-    status: "active",
-    descEn: "Your feed, generated not curated. Sloppy is an AI video social platform that builds a personalised stream from scratch — no follower graphs, no engagement bait, just content that fits where you are right now.",
-    descHi: "आपका फ़ीड — क्यूरेट नहीं, जनरेट किया हुआ। Sloppy एक AI वीडियो सोशल प्लेटफ़ॉर्म है जो आपकी पर्सनलाइज़्ड स्ट्रीम शून्य से बनाता है — न फ़ॉलोअर ग्राफ़, न एंगेजमेंट बेट, बस वही कंटेंट जो आपकी अभी की जगह से मेल खाए।",
+    status: "shipped",
+    descEn: "Your feed, generated not curated. Sloppy is an AI video social platform that builds a personalised stream from scratch. No follower graphs, no engagement bait, just content that fits where you are right now.",
+    descHi: "आपका फ़ीड, क्यूरेट नहीं, जनरेट किया हुआ। Sloppy एक AI वीडियो सोशल प्लेटफ़ॉर्म है जो आपकी पर्सनलाइज़्ड स्ट्रीम शून्य से बनाता है। न फ़ॉलोअर ग्राफ़, न एंगेजमेंट बेट, बस वही कंटेंट जो आपकी अभी की जगह से मेल खाए।",
     url: "https://github.com/priyansh-x/sloppy-reels",
+    longDescEn: "Sloppy is an AI video social platform that generates your feed instead of curating it. It builds a personalised stream from scratch with no follower graphs and no engagement bait. Just content that fits where you are right now.",
+    longDescHi: "Sloppy एक AI वीडियो सोशल प्लेटफ़ॉर्म है जो आपके फ़ीड को क्यूरेट करने की बजाय जनरेट करता है। यह बिना फ़ॉलोअर ग्राफ़ और बिना एंगेजमेंट बेट के शून्य से एक पर्सनलाइज़्ड स्ट्रीम बनाता है।",
   },
   {
     name: "Mnemos",
     status: "shipped",
-    descEn: "An interactive application that transforms audio onsets into rhythmic spikes inside an E/I neural network, visualised live through synced rasters, traces, and browser animations.",
-    descHi: "एक इंटरैक्टिव ऐप्लिकेशन जो ऑडियो ऑनसेट्स को E/I न्यूरल नेटवर्क के अंदर लयबद्ध स्पाइक्स में बदलता है — सिंक्ड रास्टर्स, ट्रेसेस और ब्राउज़र एनिमेशन के ज़रिए लाइव विज़ुअलाइज़्ड।",
+    descEn: "An interactive application that transforms audio onsets into rhythmic spikes inside an E/I neural network, visualised live through synced rasters, traces and browser animations.",
+    descHi: "एक इंटरैक्टिव ऐप्लिकेशन जो ऑडियो ऑनसेट्स को E/I न्यूरल नेटवर्क के अंदर लयबद्ध स्पाइक्स में बदलता है, सिंक्ड रास्टर्स, ट्रेसेस और ब्राउज़र एनिमेशन के ज़रिए लाइव विज़ुअलाइज़्ड।",
     url: "https://github.com/priyansh-x/Mnemos",
-  },
-  {
-    name: "Novus",
-    status: "active",
-    descEn: "Predict the whole-brain neural response to a video — second by second — before publishing it. Built on Meta FAIR's TRIBE v2 brain-encoding foundation model.",
-    descHi: "किसी वीडियो की पूरे-ब्रेन न्यूरल प्रतिक्रिया का पूर्वानुमान करें — सेकंड दर सेकंड — पब्लिश करने से पहले। Meta FAIR के TRIBE v2 ब्रेन-एन्कोडिंग फ़ाउंडेशन मॉडल पर बना।",
-    url: "https://github.com/priyansh-x/Novus",
+    longDescEn: "Mnemos is an interactive application that transforms audio onsets into rhythmic spikes inside an excitatory/inhibitory neural network. The simulation is visualised live through synced raster plots, voltage traces and browser animations.",
+    longDescHi: "Mnemos एक इंटरैक्टिव ऐप्लिकेशन है जो ऑडियो ऑनसेट्स को एक एक्साइटेटरी/इनहिबिटरी न्यूरल नेटवर्क के अंदर लयबद्ध स्पाइक्स में बदलता है। सिमुलेशन सिंक्ड रास्टर प्लॉट्स, वोल्टेज ट्रेसेस और ब्राउज़र एनिमेशन के ज़रिए लाइव विज़ुअलाइज़ किया जाता है।",
   },
 ] as const;
 
@@ -61,7 +67,7 @@ export const postContent: Record<string, string[]> = {
 
 
 export const quotes = [
-  { textEn: "The only way to do great work is to love what you do.", textHi: "महान काम करने का एकमात्र तरीका है — जो आप करते हैं, उससे प्रेम करना।", author: "Steve Jobs" },
+  { textEn: "The only way to do great work is to love what you do.", textHi: "महान काम करने का एकमात्र तरीका है, जो आप करते हैं उससे प्रेम करना।", author: "Steve Jobs" },
   { textEn: "Study hard what interests you the most in the most undisciplined, irreverent and original manner possible.", textHi: "जो आपको सबसे ज़्यादा रुचिकर लगे, उसे सबसे अनुशासनहीन, बेधड़क और मौलिक तरीक़े से पढ़ें।", author: "Richard Feynman" },
   { textEn: "Make something people want.", textHi: "ऐसा कुछ बनाओ जो लोग चाहते हों।", author: "Paul Graham" },
   { textEn: "The best time to plant a tree was 20 years ago. The second best time is now.", textHi: "पेड़ लगाने का सबसे अच्छा समय 20 साल पहले था। दूसरा सबसे अच्छा समय अभी है।", author: "Chinese Proverb" },
@@ -87,12 +93,12 @@ export const t = {
   samoraLink: { en: "Samora AI (YC W26)", hi: "Samora AI (YC W26)" },
   bioSamoraDesc: {
     en: ", building AI agents that automate enterprise workflows. Also working in capital advisory and tech at ",
-    hi: " में जनरलिस्ट इंटर्न — एंटरप्राइज़ वर्कफ़्लो को ऑटोमेट करने वाले AI एजेंट्स बना रहा हूँ। साथ ही ",
+    hi: " में जनरलिस्ट इंटर्न, एंटरप्राइज़ वर्कफ़्लो को ऑटोमेट करने वाले AI एजेंट्स बना रहा हूँ। साथ ही ",
   },
   conquestLink: { en: "Conquest", hi: "Conquest" },
   bioAfterConquest: {
     en: ", India's largest student-run startup accelerator.",
-    hi: " — भारत के सबसे बड़े छात्र-संचालित स्टार्टअप एक्सेलरेटर — में कैपिटल एडवाइज़री और टेक पर काम कर रहा हूँ।",
+    hi: ", भारत के सबसे बड़े छात्र-संचालित स्टार्टअप एक्सेलरेटर, में कैपिटल एडवाइज़री और टेक पर काम कर रहा हूँ।",
   },
   bioSeeStart: { en: "See my ", hi: "मेरे " },
   projectsLink: { en: "projects", hi: "प्रोजेक्ट्स" },
@@ -103,18 +109,18 @@ export const t = {
   bioFinal: { en: ".", hi: "।" },
   sectionAbout: { en: "About", hi: "परिचय" },
   aboutPara: {
-    en: "I'm fascinated by the future, what technology is about to make possible, and who gets to shape it. Today I'm learning AI and building with it. But what started everything was rockets: the sheer ambition of the thing. I play sport to stay sane, learn to stay curious, and I trekked to Everest Base Camp with my dad because some things you just have to go do. I care about geopolitics for the same reason I care about tech — the world is being written right now, and I'd rather understand it than watch it happen.",
-    hi: "मैं भविष्य से मोहित हूँ — कि तकनीक अभी क्या मुमकिन करने वाली है, और उसे आकार देने का मौक़ा किसे मिलेगा। आज मैं AI सीख रहा हूँ और उससे बना रहा हूँ। लेकिन सब कुछ शुरू हुआ था रॉकेट्स से — उस चीज़ की निरी महत्वाकांक्षा से। मैं खेल खेलता हूँ ख़ुद को संतुलित रखने के लिए, सीखता हूँ जिज्ञासा बनाए रखने के लिए, और अपने पिताजी के साथ एवरेस्ट बेस कैंप तक ट्रेक किया क्योंकि कुछ चीज़ें बस करनी पड़ती हैं। मुझे जियोपॉलिटिक्स की परवाह उसी वजह से है जिस वजह से तकनीक की — दुनिया अभी लिखी जा रही है, और मैं उसे देखने के बजाय समझना पसंद करूँगा।",
+    en: "I'm fascinated by the future, what technology is about to make possible, and who gets to shape it. Today I'm learning AI and building with it. But what started everything was rockets: the sheer ambition of the thing. I play sport to stay sane, learn to stay curious, and I trekked to Everest Base Camp with my dad because some things you just have to go do. I care about geopolitics for the same reason I care about tech. The world is being written right now, and I'd rather understand it than watch it happen.",
+    hi: "मैं भविष्य से मोहित हूँ, कि तकनीक अभी क्या मुमकिन करने वाली है, और उसे आकार देने का मौक़ा किसे मिलेगा। आज मैं AI सीख रहा हूँ और उससे बना रहा हूँ। लेकिन सब कुछ शुरू हुआ था रॉकेट्स से, उस चीज़ की निरी महत्वाकांक्षा से। मैं खेल खेलता हूँ ख़ुद को संतुलित रखने के लिए, सीखता हूँ जिज्ञासा बनाए रखने के लिए, और अपने पिताजी के साथ एवरेस्ट बेस कैंप तक ट्रेक किया क्योंकि कुछ चीज़ें बस करनी पड़ती हैं। मुझे जियोपॉलिटिक्स की परवाह उसी वजह से है जिस वजह से तकनीक की। दुनिया अभी लिखी जा रही है, और मैं उसे देखने के बजाय समझना पसंद करूँगा।",
   },
   sectionProjects: { en: "Projects", hi: "प्रोजेक्ट्स" },
   sectionWriting: { en: "LogX", hi: "LogX" },
   writingSub: {
-    en: "Unfiltered writing. Personal, technical, and everything between.",
+    en: "Unfiltered writing. Personal, technical, and everything in between.",
     hi: "बिना फ़िल्टर के लेखन। निजी, तकनीकी, और बीच का सब कुछ।",
   },
   resume: { en: "resume", hi: "रिज़्यूमे" },
   toggleLabel: { en: "हिंदी", hi: "English" },
-  rocket: { en: "↑ still launching", hi: "↑ अभी उड़ान पर" },
+  viewAll: { en: "view all →", hi: "सब देखें →" },
   comingSoon: { en: "coming soon", hi: "जल्द आ रहा है" },
   back: { en: "← back", hi: "← वापस" },
   location: { en: "Bangalore", hi: "बेंगलुरु" },

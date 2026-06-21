@@ -14,7 +14,7 @@ const LogXPost = () => {
 
   useEffect(() => {
     if (post) {
-      document.title = `${lang === "en" ? post.titleEn : post.titleHi} — Priyansh Joshi`;
+      document.title = `${lang === "en" ? post.titleEn : post.titleHi} | Priyansh Joshi`;
     }
   }, [post, lang]);
 

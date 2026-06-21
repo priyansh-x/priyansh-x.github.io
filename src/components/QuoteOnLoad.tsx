@@ -8,7 +8,7 @@ const QuoteOnLoad = () => {
   const q = useMemo(() => quotes[Math.floor(Math.random() * quotes.length)], []);
   return (
     <p className="italic text-faint text-sm mt-6">
-      {lang === "en" ? q.textEn : q.textHi} — {q.author}
+      &ldquo;{lang === "en" ? q.textEn : q.textHi}&rdquo; &ndash; {q.author}
     </p>
   );
 };

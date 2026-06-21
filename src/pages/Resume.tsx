@@ -64,7 +64,7 @@ const School = ({ name, location, detail, dates }: SchoolProps) => (
 
 const Resume = () => {
   useEffect(() => {
-    document.title = "Resume — Priyansh Joshi";
+    document.title = "Resume | Priyansh Joshi";
   }, []);
 
   return (
@@ -102,19 +102,19 @@ const Resume = () => {
             <School
               name="BITS Pilani"
               location="Pilani, India"
-              detail="Bachelor's in Engineering — Electrical & Electronics · CGPA 8.86 / 10"
+              detail="Bachelor's in Engineering, Electrical & Electronics · CGPA 8.86 / 10"
               dates="Aug 2025 – Jul 2029"
             />
             <School
               name="Geethanjali Vidyalaya"
               location="Bangalore, India"
-              detail="CBSE, 12th Grade — 96.4%"
+              detail="CBSE, 12th Grade · 96.4%"
               dates="2025"
             />
             <School
               name="Greenwood High"
               location="Bangalore, India"
-              detail="ICSE, 10th Grade — 97.8%"
+              detail="ICSE, 10th Grade · 97.8%"
               dates="2023"
             />
           </div>
@@ -184,21 +184,21 @@ const Resume = () => {
           <div className="space-y-6">
             <article>
               <div className="flex items-baseline justify-between gap-4">
-                <h3 className="text-foreground font-medium">Mnemos</h3>
+                <h3 className="text-foreground font-medium">DevStats</h3>
                 <a
-                  href="https://github.com/priyansh-x/Mnemos"
+                  href="https://github.com/priyansh-x/devstats"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="link-inline text-sm shrink-0"
-                  aria-label="Mnemos on GitHub"
+                  aria-label="DevStats on GitHub"
                 >
                   ↗
                 </a>
               </div>
               <p className="text-mute text-sm mt-1 leading-relaxed">
-                An interactive Brian2 application that transforms audio onsets
-                into rhythmic spikes within an E/I neural network, visualised
-                through synced rasters, traces, and browser animations.
+                Telemetry and leaderboard for AI coding tools. Track tokens,
+                sessions and streaks across Claude Code, Cursor, Codex, Windsurf
+                and Antigravity. Private by default.
               </p>
             </article>
             <article>
@@ -215,27 +215,28 @@ const Resume = () => {
                 </a>
               </div>
               <p className="text-mute text-sm mt-1 leading-relaxed">
-                An AI video social platform where users generate, remix, and
-                share short-form videos through natural language prompts.
+                AI video social platform that generates your feed instead of
+                curating it. No follower graphs, no engagement bait, just
+                content that fits where you are right now.
               </p>
             </article>
             <article>
               <div className="flex items-baseline justify-between gap-4">
-                <h3 className="text-foreground font-medium">Novus</h3>
+                <h3 className="text-foreground font-medium">Mnemos</h3>
                 <a
-                  href="https://github.com/priyansh-x/Novus"
+                  href="https://github.com/priyansh-x/Mnemos"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="link-inline text-sm shrink-0"
-                  aria-label="Novus on GitHub"
+                  aria-label="Mnemos on GitHub"
                 >
                   ↗
                 </a>
               </div>
               <p className="text-mute text-sm mt-1 leading-relaxed">
-                Predict the whole-brain neural response to a video — second by
-                second — before publishing it. Built on Meta FAIR's TRIBE v2
-                brain-encoding foundation model.
+                Interactive application that transforms audio onsets into
+                rhythmic spikes inside an E/I neural network, visualised live
+                through synced rasters, traces and browser animations.
               </p>
             </article>
           </div>
@@ -245,18 +246,18 @@ const Resume = () => {
           <h2 className="text-foreground mb-6">Awards & Achievements</h2>
           <ul className="space-y-2 text-mute text-sm leading-relaxed">
             <li>
-              <span className="text-foreground">JEE Mains 2025</span> — 99.4
+              <span className="text-foreground">JEE Mains 2025</span> · 99.4
               percentile (9,214 AIR out of 14.75 lakh candidates)
             </li>
             <li>
-              <span className="text-foreground">JEE Advanced 2025</span> —
+              <span className="text-foreground">JEE Advanced 2025</span> ·{" "}
               13,080 AIR (top 1% among 1.8 lakh candidates)
             </li>
             <li>
               <span className="text-foreground">
-                YSI — Space Kidz India Competition
+                YSI, Space Kidz India Competition
               </span>{" "}
-              — top 50 from 30,000+ participants
+              · top 50 from 30,000+ participants
             </li>
           </ul>
         </section>

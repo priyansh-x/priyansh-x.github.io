@@ -2,15 +2,13 @@ import LangToggle from "@/components/LangToggle";
 import NameHover from "@/components/NameHover";
 import NextLaunch from "@/components/NextLaunch";
 import QuoteOnLoad from "@/components/QuoteOnLoad";
-import RocketLaunch from "@/components/RocketLaunch";
 import ProjectCard from "@/components/ProjectCard";
+import TextScramble from "@/components/TextScramble";
 import { useLang } from "@/contexts/LangContext";
 import { posts, projects, t } from "@/lib/content";
 import { formatDate } from "@/lib/utils";
 import { Link } from "react-router-dom";
 
-// Inline org mark — small square next to the link text. Sits on the
-// text baseline; explicit dims so the line height stays stable.
 const OrgMark = ({ src, alt }: { src: string; alt: string }) => (
   <img
     src={src}
@@ -95,7 +93,7 @@ const Index = () => {
               rel="noopener noreferrer"
               className="link-inline whitespace-nowrap"
             >
-              <OrgMark src="/logos/samora.png" alt="" />
+              <OrgMark src="/logos/samora.svg" alt="" />
               {t.samoraLink[lang]}
             </a>
             {t.bioSamoraDesc[lang]}
@@ -126,17 +124,23 @@ const Index = () => {
 
         {/* About */}
         <section id="about" aria-labelledby="about-heading" className="mt-24">
-          <h2 id="about-heading" className="text-foreground mb-6">
-            {t.sectionAbout[lang]}
-          </h2>
+          <TextScramble
+            text={t.sectionAbout[lang]}
+            as="h2"
+            id="about-heading"
+            className="text-foreground mb-6"
+          />
           <p className="text-mute leading-relaxed">{t.aboutPara[lang]}</p>
         </section>
 
         {/* Projects */}
         <section id="projects" aria-labelledby="projects-heading" className="mt-24">
-          <h2 id="projects-heading" className="text-foreground mb-6">
-            {t.sectionProjects[lang]}
-          </h2>
+          <TextScramble
+            text={t.sectionProjects[lang]}
+            as="h2"
+            id="projects-heading"
+            className="text-foreground mb-6"
+          />
           <div className="space-y-8">
             {projects.map((p) => (
               <ProjectCard
@@ -152,9 +156,12 @@ const Index = () => {
 
         {/* Writing / LogX */}
         <section id="logx" aria-labelledby="logx-heading" className="mt-24">
-          <h2 id="logx-heading" className="text-foreground">
-            {t.sectionWriting[lang]}
-          </h2>
+          <TextScramble
+            text={t.sectionWriting[lang]}
+            as="h2"
+            id="logx-heading"
+            className="text-foreground"
+          />
           <p className="text-mute text-sm mt-1 mb-6">{t.writingSub[lang]}</p>
           <ul className="space-y-2">
             {posts.map((post) => (
@@ -170,7 +177,7 @@ const Index = () => {
           </ul>
         </section>
 
-        {/* Footer: socials inline + rocket */}
+        {/* Footer: socials */}
         <footer id="contact" className="mt-24">
           <div className="flex items-center gap-5">
             <a
@@ -221,9 +228,7 @@ const Index = () => {
             </Link>
           </div>
 
-          <RocketLaunch />
           <NextLaunch />
-
         </footer>
       </main>
     </div>
