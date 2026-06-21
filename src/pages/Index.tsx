@@ -1,5 +1,7 @@
+import { useCallback, useState } from "react";
 import LangToggle from "@/components/LangToggle";
 import NameHover from "@/components/NameHover";
+import HandsIntro from "@/components/HandsIntro";
 import NextLaunch from "@/components/NextLaunch";
 import QuoteOnLoad from "@/components/QuoteOnLoad";
 import ProjectCard from "@/components/ProjectCard";
@@ -55,9 +57,22 @@ const XIcon = () => (
 
 const Index = () => {
   const { lang } = useLang();
+  const alreadySeen = typeof window !== "undefined" && sessionStorage.getItem("introSeen") === "1";
+  const [showIntro, setShowIntro] = useState(!alreadySeen);
+
+  const onIntroComplete = useCallback(() => {
+    setShowIntro(false);
+    sessionStorage.setItem("introSeen", "1");
+  }, []);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {showIntro && (
+        <>
+          <HandsIntro onComplete={onIntroComplete} />
+          <div style={{ height: "500px" }} aria-hidden />
+        </>
+      )}
       <LangToggle />
 
       <main className="mx-auto max-w-[640px] px-6 py-24 sm:py-32">
