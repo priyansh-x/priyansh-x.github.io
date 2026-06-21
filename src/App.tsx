@@ -9,6 +9,7 @@ import LogXPost from "./pages/LogXPost.tsx";
 import Resume from "./pages/Resume.tsx";
 import Projects from "./pages/Projects.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import CommandPalette from "./components/CommandPalette.tsx";
 
 const queryClient = new QueryClient();
 
@@ -19,6 +20,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter basename={import.meta.env.BASE_URL}>
+          <CommandPalette />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/resume" element={<Resume />} />
