@@ -22,13 +22,13 @@ export const projects = [
     longDescHi: "Sloppy एक AI वीडियो सोशल प्लेटफ़ॉर्म है जो आपके फ़ीड को क्यूरेट करने की बजाय जनरेट करता है। यह बिना फ़ॉलोअर ग्राफ़ और बिना एंगेजमेंट बेट के शून्य से एक पर्सनलाइज़्ड स्ट्रीम बनाता है।",
   },
   {
-    name: "Mnemos",
+    name: "Agent Passport",
     status: "shipped",
-    descEn: "An interactive application that transforms audio onsets into rhythmic spikes inside an E/I neural network, visualised live through synced rasters, traces and browser animations.",
-    descHi: "एक इंटरैक्टिव ऐप्लिकेशन जो ऑडियो ऑनसेट्स को E/I न्यूरल नेटवर्क के अंदर लयबद्ध स्पाइक्स में बदलता है, सिंक्ड रास्टर्स, ट्रेसेस और ब्राउज़र एनिमेशन के ज़रिए लाइव विज़ुअलाइज़्ड।",
-    url: "https://github.com/priyansh-x/Mnemos",
-    longDescEn: "Mnemos is an interactive application that transforms audio onsets into rhythmic spikes inside an excitatory/inhibitory neural network. The simulation is visualised live through synced raster plots, voltage traces and browser animations.",
-    longDescHi: "Mnemos एक इंटरैक्टिव ऐप्लिकेशन है जो ऑडियो ऑनसेट्स को एक एक्साइटेटरी/इनहिबिटरी न्यूरल नेटवर्क के अंदर लयबद्ध स्पाइक्स में बदलता है। सिमुलेशन सिंक्ड रास्टर प्लॉट्स, वोल्टेज ट्रेसेस और ब्राउज़र एनिमेशन के ज़रिए लाइव विज़ुअलाइज़ किया जाता है।",
+    descEn: "Authorization for AI agents in 10 lines of code. Scoped permissions, spend limits, delegation chains and instant revocation, backed by Ed25519 signatures.",
+    descHi: "AI एजेंट्स के लिए ऑथराइज़ेशन, बस 10 लाइन कोड में। स्कोप्ड परमिशन, स्पेंड लिमिट, डेलिगेशन चेन और तुरंत रिवोकेशन, Ed25519 सिग्नेचर से सुरक्षित।",
+    url: "https://github.com/priyansh-x/agent-passport",
+    longDescEn: "Agent Passport is an authorization layer for AI agents you can drop in with about 10 lines of code. It gives agents scoped permissions, spend limits, delegation chains and instant revocation, all backed by Ed25519 signatures. Where IETF AIMS handles agent identity, Agent Passport handles agent authorization.",
+    longDescHi: "Agent Passport AI एजेंट्स के लिए एक ऑथराइज़ेशन लेयर है जिसे लगभग 10 लाइन कोड में जोड़ा जा सकता है। यह एजेंट्स को स्कोप्ड परमिशन, स्पेंड लिमिट, डेलिगेशन चेन और तुरंत रिवोकेशन देता है, सब कुछ Ed25519 सिग्नेचर से सुरक्षित। जहाँ IETF AIMS एजेंट की पहचान संभालता है, वहीं Agent Passport एजेंट का ऑथराइज़ेशन संभालता है।",
   },
 ] as const;
 

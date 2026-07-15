@@ -222,21 +222,21 @@ const Resume = () => {
             </article>
             <article>
               <div className="flex items-baseline justify-between gap-4">
-                <h3 className="text-foreground font-medium">Mnemos</h3>
+                <h3 className="text-foreground font-medium">Agent Passport</h3>
                 <a
-                  href="https://github.com/priyansh-x/Mnemos"
+                  href="https://github.com/priyansh-x/agent-passport"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="link-inline text-sm shrink-0"
-                  aria-label="Mnemos on GitHub"
+                  aria-label="Agent Passport on GitHub"
                 >
                   ↗
                 </a>
               </div>
               <p className="text-mute text-sm mt-1 leading-relaxed">
-                Interactive application that transforms audio onsets into
-                rhythmic spikes inside an E/I neural network, visualised live
-                through synced rasters, traces and browser animations.
+                Authorization for AI agents in 10 lines of code. Scoped
+                permissions, spend limits, delegation chains and instant
+                revocation, backed by Ed25519 signatures.
               </p>
             </article>
           </div>
