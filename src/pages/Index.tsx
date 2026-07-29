@@ -238,9 +238,7 @@ const Index = () => {
             >
               <XIcon />
             </a>
-            <Link to="/resume" className="link-inline text-sm ml-2">
-              {t.resume[lang]} →
-            </Link>
+            {/* Resume link removed for now — will point at a Drive PDF later. */}
           </div>
 
           <NextLaunch />

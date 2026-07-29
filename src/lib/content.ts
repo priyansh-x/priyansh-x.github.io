@@ -37,7 +37,7 @@ export const posts = [
     slug: "the-chinese-farmer",
     titleEn: "The Chinese Farmer",
     titleHi: "चीनी किसान की कहानी",
-    year: "2025",
+    year: "2026",
     date: "2026-05-23",
   },
   {
