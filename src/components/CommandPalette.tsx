@@ -59,14 +59,6 @@ const CommandPalette = () => {
         keywords: "writing blog",
       },
       {
-        id: "resume",
-        label: "Resume",
-        section: "Navigate",
-        icon: "→",
-        action: () => { navigate("/resume"); close(); },
-        keywords: "cv",
-      },
-      {
         id: "all-projects",
         label: "All Projects",
         section: "Navigate",
