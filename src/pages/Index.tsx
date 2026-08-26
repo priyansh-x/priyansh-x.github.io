@@ -7,7 +7,7 @@ import QuoteOnLoad from "@/components/QuoteOnLoad";
 import ProjectCard from "@/components/ProjectCard";
 import TextScramble from "@/components/TextScramble";
 import { useLang } from "@/contexts/LangContext";
-import { posts, projects, t } from "@/lib/content";
+import { posts, projects, t, RESUME_URL } from "@/lib/content";
 import { formatDate } from "@/lib/utils";
 import { Link } from "react-router-dom";
 
@@ -238,7 +238,14 @@ const Index = () => {
             >
               <XIcon />
             </a>
-            {/* Resume link removed for now — will point at a Drive PDF later. */}
+            <a
+              href={RESUME_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-inline text-mute"
+            >
+              {t.resume[lang]}
+            </a>
           </div>
 
           <NextLaunch />

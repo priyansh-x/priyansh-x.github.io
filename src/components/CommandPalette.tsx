@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLang } from "@/contexts/LangContext";
+import { RESUME_URL } from "@/lib/content";
 
 interface Command {
   id: string;
@@ -64,6 +65,14 @@ const CommandPalette = () => {
         section: "Navigate",
         icon: "→",
         action: () => { navigate("/projects"); close(); },
+      },
+      {
+        id: "resume",
+        label: "Resume",
+        section: "Links",
+        icon: "\u2197",
+        action: () => { window.open(RESUME_URL, "_blank"); close(); },
+        keywords: "cv pdf",
       },
       {
         id: "github",

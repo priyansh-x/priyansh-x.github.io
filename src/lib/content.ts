@@ -1,3 +1,6 @@
+export const RESUME_URL =
+  "https://drive.google.com/file/d/1baXSxtwLopebznifaTD7tLkqQ59DaiLX/view?usp=sharing";
+
 // Bilingual content + shared data for the site
 
 export type Lang = "en" | "hi";
