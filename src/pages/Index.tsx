@@ -82,15 +82,6 @@ const Index = () => {
 
           <p className="text-mute text-base mb-8">
             {t.location[lang]}, <span aria-label="India">🇮🇳</span>
-            <span aria-hidden className="mx-2">·</span>
-            <a
-              href={RESUME_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="link-inline"
-            >
-              {t.resume[lang]} ↗
-            </a>
           </p>
 
           <p className="text-foreground leading-relaxed">
