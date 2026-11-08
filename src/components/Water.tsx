@@ -5,6 +5,12 @@ import { useEffect, useRef } from "react";
 const CELL = 5; // screen px per simulation cell
 const DAMPING = 0.985;
 
+const EVT = "water:drop";
+
+/** Drop something into the water at a screen point. */
+export const dropAt = (x: number, y: number, strength = 500, radius = 4) =>
+  window.dispatchEvent(new CustomEvent(EVT, { detail: { x, y, strength, radius } }));
+
 const Water = () => {
   const ref = useRef<HTMLCanvasElement>(null);
 
@@ -95,16 +101,21 @@ const Water = () => {
     };
     const onLeave = () => { last = null; };
     const onDown = (e: PointerEvent) => drop(e.clientX, e.clientY, 500, 4);
+    const onDrop = (e: Event) => {
+      const { x, y, strength, radius } = (e as CustomEvent).detail;
+      drop(x, y, strength, radius);
+    };
 
     // A slow drip now and then, so the surface hints that it's alive.
     const drip = window.setInterval(() => {
       if (!document.hidden) drop(Math.random() * window.innerWidth, Math.random() * window.innerHeight, 260, 3);
-    }, 3500);
+    }, 4500);
 
     resize();
     window.addEventListener("resize", resize);
     window.addEventListener("pointermove", onMove);
     window.addEventListener("pointerdown", onDown);
+    window.addEventListener(EVT, onDrop);
     document.addEventListener("pointerleave", onLeave);
     return () => {
       cancelAnimationFrame(raf);
@@ -112,6 +123,7 @@ const Water = () => {
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerdown", onDown);
+      window.removeEventListener(EVT, onDrop);
       document.removeEventListener("pointerleave", onLeave);
     };
   }, []);

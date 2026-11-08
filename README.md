@@ -1,6 +1,6 @@
 # priyanshx.tech
 
-One page, black and white: *I want to do hard things.*
+One page, black and white: *I want to do hard things.* Then the receipts: a short ledger of hard things so far, a live countdown to the next rocket launch, and dark water that ripples under the cursor.
 
 Vite + React + TypeScript. The page is `src/pages/Index.tsx`, the styles are `src/index.css`. Fonts: Instrument Serif and JetBrains Mono (Google Fonts).
 

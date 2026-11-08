@@ -13,3 +13,6 @@ Object.defineProperty(window, "matchMedia", {
     dispatchEvent: () => {},
   }),
 });
+
+// jsdom has no canvas; the water effect bails out when getContext returns null.
+HTMLCanvasElement.prototype.getContext = (() => null) as never;
