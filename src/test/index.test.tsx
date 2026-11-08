@@ -12,6 +12,11 @@ describe("home", () => {
     expect(screen.getByRole("heading", { name: "I want to do hard things." })).toBeInTheDocument();
   });
 
+  it("signs it", () => {
+    render(<Index />);
+    expect(screen.getByText("Priyansh Joshi")).toBeInTheDocument();
+  });
+
   it("links out with labelled icons only", () => {
     render(<Index />);
     expect(screen.getByRole("link", { name: "GitHub" })).toHaveAttribute("href", "https://github.com/priyansh-x");

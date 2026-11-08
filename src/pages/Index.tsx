@@ -1,9 +1,8 @@
-import { useEffect, useRef } from "react";
-import Sky, { type SkyHandle } from "@/components/Sky";
+import Sky from "@/components/Sky";
 
 const LINE = "I want to do hard things.";
 // Two lines, always: "I want to do" / "hard things."
-const LINES = [["I", "want", "to", "do"], ["hard", "things"]];
+const LINES = [["I", "want", "to", "do"], ["hard", "things."]];
 
 const icon = (d: string, stroke = false) => (
   <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"
@@ -23,48 +22,13 @@ const links = [
     svg: icon("M3 5h18v14H3zM3 7l9 6 9-6", true) },
 ];
 
-const Index = () => {
-  const sky = useRef<SkyHandle>(null);
-  const stop = useRef<HTMLSpanElement>(null);
+const Index = () => (
+  <main className="page">
+    <Sky />
+    <div className="grain" aria-hidden="true" />
 
-  // The full stop is the launch pad. Once the line has landed, something
-  // lifts off from it; every click after that sends up another.
-  useEffect(() => {
-    const fire = (power = 1) => {
-      const el = stop.current;
-      if (!el || !sky.current) return;
-      const r = el.getBoundingClientRect();
-      sky.current.launch({ x: r.left + r.width * 0.4, y: r.top + r.height * 0.74, power });
-    };
-    const id = window.setTimeout(() => fire(1), 1900);
-    const onDown = (e: PointerEvent) => {
-      if (!(e.target as HTMLElement).closest("a")) fire(0.85);
-    };
-    window.addEventListener("pointerdown", onDown);
-    return () => {
-      window.clearTimeout(id);
-      window.removeEventListener("pointerdown", onDown);
-    };
-  }, []);
-
-  return (
-    <main className="page">
-      <Sky ref={sky} />
-      <div className="grain" aria-hidden="true" />
-
-      <h1 className="line" aria-label={LINE}>
-        {LINES.map((words, l) => (
-          <span key={l}>
-            {words.map((word, w) => (
-              <span key={w} className="word" style={{ animationDelay: `${0.15 + (l * 4 + w) * 0.12}s` }} aria-hidden="true">
-                {word}
-                {word === "things" && <span ref={stop}>.</span>}
-              </span>
-            ))}
-          </span>
-        ))}
-      </h1>
-
+    <header className="top">
+      <p className="name">Priyansh Joshi</p>
       <nav className="links" aria-label="Elsewhere">
         {links.map((l) => (
           <a key={l.label} href={l.href} aria-label={l.label} title={l.label}
@@ -73,8 +37,20 @@ const Index = () => {
           </a>
         ))}
       </nav>
-    </main>
-  );
-};
+    </header>
+
+    <h1 className="line" aria-label={LINE}>
+      {LINES.map((words, l) => (
+        <span key={l}>
+          {words.map((word, w) => (
+            <span key={w} className="word" style={{ animationDelay: `${0.15 + (l * 4 + w) * 0.12}s` }} aria-hidden="true">
+              {word}
+            </span>
+          ))}
+        </span>
+      ))}
+    </h1>
+  </main>
+);
 
 export default Index;

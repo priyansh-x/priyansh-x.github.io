@@ -1,6 +1,6 @@
 # priyanshx.tech
 
-One screen, black and white: *I want to do hard things.* Behind it, a long-exposure night sky: star trails that brighten under the cursor, and a launch trajectory that lifts off from the full stop (click for another).
+One screen, black and white: *I want to do hard things.* Behind it, a long-exposure night sky; the cursor is a gravitational lens that bends the star trails around it.
 
 Vite + React + TypeScript. The page is `src/pages/Index.tsx`, the styles are `src/index.css`. Fonts: Instrument Serif and JetBrains Mono (Google Fonts).
 
