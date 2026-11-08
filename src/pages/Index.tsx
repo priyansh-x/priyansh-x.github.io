@@ -1,4 +1,6 @@
-const LINE = "i just wanna do hard things.";
+import Water from "@/components/Water";
+
+const LINE = "I want to do hard things.";
 
 const links = [
   { label: "github", href: "https://github.com/priyansh-x" },
@@ -9,6 +11,7 @@ const links = [
 
 const Index = () => (
   <main className="page">
+    <Water />
     <h1 className="line" aria-label={LINE}>
       {LINE.split(" ").map((word, i) => (
         <span key={i} className="word" style={{ animationDelay: `${0.15 + i * 0.12}s` }} aria-hidden="true">

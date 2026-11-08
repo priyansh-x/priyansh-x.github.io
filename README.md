@@ -1,6 +1,6 @@
 # priyanshx.tech
 
-One page, black and white: *i just wanna do hard things.*
+One page, black and white: *I want to do hard things.*
 
 Vite + React + TypeScript. The page is `src/pages/Index.tsx`, the styles are `src/index.css`. Fonts: Instrument Serif and JetBrains Mono (Google Fonts).
 

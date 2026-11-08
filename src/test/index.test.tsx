@@ -5,6 +5,6 @@ import Index from "@/pages/Index";
 describe("home", () => {
   it("says the line", () => {
     render(<Index />);
-    expect(screen.getByRole("heading", { name: "i just wanna do hard things." })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "I want to do hard things." })).toBeInTheDocument();
   });
 });
