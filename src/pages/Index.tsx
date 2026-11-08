@@ -1,114 +1,79 @@
-import { useEffect, useRef } from "react";
-import Water, { dropAt } from "@/components/Water";
-import Name from "@/components/Name";
-import Clock from "@/components/Clock";
-import NextLaunch from "@/components/NextLaunch";
+import { useEffect, useRef, useState } from "react";
+import Sky, { type SkyHandle } from "@/components/Sky";
 
 const LINE = "I want to do hard things.";
-const RESUME_URL = "https://drive.google.com/file/d/1baXSxtwLopebznifaTD7tLkqQ59DaiLX/view?usp=sharing";
+// Two lines, always: "I want to do" / "hard things."
+const LINES = [["I", "want", "to", "do"], ["hard", "things"]];
 
-const A = ({ href, children }: { href: string; children: React.ReactNode }) => (
-  <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">
-    {children}
-  </a>
+const icon = (d: string, stroke = false) => (
+  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"
+    fill={stroke ? "none" : "currentColor"} stroke={stroke ? "currentColor" : undefined} strokeWidth={stroke ? 1.6 : undefined}>
+    <path d={d} />
+  </svg>
 );
 
 const links = [
-  { label: "github", href: "https://github.com/priyansh-x" },
-  { label: "x", href: "https://x.com/otziiz" },
-  { label: "linkedin", href: "https://www.linkedin.com/in/priyansh-joshi-206658273/" },
-  { label: "monkeytype", href: "https://monkeytype.com/profile/PriyanshX" },
-  { label: "resume", href: RESUME_URL },
-  { label: "email", href: "mailto:f20250479@pilani.bits-pilani.ac.in" },
+  { label: "GitHub", href: "https://github.com/priyansh-x",
+    svg: icon("M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.8 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2.9-.3 2-.4 3-.4s2.1.1 3 .4c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.5-1.5 7.8-5.8 7.8-10.9C23.5 5.7 18.3.5 12 .5z") },
+  { label: "X", href: "https://x.com/otziiz",
+    svg: icon("M18.244 2H21.5l-7.5 8.572L22.5 22h-6.844l-5.36-7.01L4.16 22H.9l8.02-9.166L.5 2h7.02l4.84 6.39L18.244 2zm-1.2 18h1.86L7.04 4H5.06l11.984 16z") },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/priyansh-joshi-206658273/",
+    svg: icon("M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5V9h3v10zM6.5 7.7a1.7 1.7 0 110-3.5 1.7 1.7 0 010 3.5zM19 19h-3v-5c0-1.2-.5-2-1.6-2-.9 0-1.4.6-1.6 1.2-.1.2-.1.5-.1.8v5h-3V9h3v1.3c.4-.6 1.1-1.5 2.7-1.5 2 0 3.5 1.3 3.5 4.1V19z") },
+  { label: "Email", href: "mailto:f20250479@pilani.bits-pilani.ac.in",
+    svg: icon("M3 5h18v14H3zM3 7l9 6 9-6", true) },
 ];
 
-// Two lines, always: "I want to do" / "hard things."
-const LINES = [["I", "want", "to", "do"], ["hard", "things."]];
-
 const Index = () => {
+  const sky = useRef<SkyHandle>(null);
   const stop = useRef<HTMLSpanElement>(null);
+  const [stopAway, setStopAway] = useState(false);
 
-  // Once the line has landed, its full stop falls into the water.
+  // The full stop is a rocket: once the line has landed, it lifts off.
   useEffect(() => {
+    let back = 0;
     const id = window.setTimeout(() => {
-      const r = stop.current?.getBoundingClientRect();
-      if (r) dropAt(r.left + r.width / 2, r.bottom - r.height * 0.2, 900, 5);
-    }, 1500);
-    return () => window.clearTimeout(id);
+      const el = stop.current;
+      if (!el || !sky.current) return;
+      const r = el.getBoundingClientRect();
+      const fs = parseFloat(getComputedStyle(el).fontSize);
+      const radius = Math.max(3, fs * 0.055);
+      setStopAway(true);
+      sky.current.launch({
+        x: r.left + r.width * 0.42,
+        y: r.top + r.height * 0.8 - radius,
+        r: radius,
+        ignite: 0.9,
+        onDone: () => { back = window.setTimeout(() => setStopAway(false), 1400); },
+      });
+    }, 1800);
+    return () => { window.clearTimeout(id); window.clearTimeout(back); };
   }, []);
 
   return (
     <main className="page">
-      <Water />
+      <Sky ref={sky} />
 
-      <header className="top mono">
-        <Name />
-        <Clock />
-      </header>
+      <h1 className="line" aria-label={LINE}>
+        {LINES.map((words, l) => (
+          <span key={l}>
+            {words.map((word, w) => (
+              <span key={w} className="word" style={{ animationDelay: `${0.15 + (l * 4 + w) * 0.12}s` }} aria-hidden="true">
+                {word}
+                {word === "things" && <span ref={stop} className={`stop${stopAway ? " away" : ""}`}>.</span>}
+              </span>
+            ))}
+          </span>
+        ))}
+      </h1>
 
-      <section className="hero">
-        <h1 className="line" aria-label={LINE}>
-          {LINES.map((words, l) => (
-            <span key={l}>
-              {words.map((word, w) => {
-                const i = l * 4 + w;
-                const last = word === "things.";
-                return (
-                  <span key={w} className="word" style={{ animationDelay: `${0.15 + i * 0.12}s` }} aria-hidden="true">
-                    {last ? word.slice(0, -1) : word}
-                    {last && <span ref={stop}>.</span>}
-                  </span>
-                );
-              })}
-            </span>
-          ))}
-        </h1>
-      </section>
-
-      <section className="ledger" aria-labelledby="ledger-h">
-        <h2 id="ledger-h" className="mono">hard things, so far</h2>
-        <dl>
-          <div className="row">
-            <dt className="mono">5,364 m</dt>
-            <dd>Walked to Everest Base Camp with my dad.</dd>
-          </div>
-          <div className="row">
-            <dt className="mono">yc w26</dt>
-            <dd>
-              Building AI agents that run enterprise workflows at <A href="https://www.samora.ai/">Samora</A>.
-            </dd>
-          </div>
-          <div className="row">
-            <dt className="mono">conquest</dt>
-            <dd>
-              Capital advisory and tech at <A href="https://www.conquestbits.org/">India’s largest student-run accelerator</A>.
-            </dd>
-          </div>
-          <div className="row">
-            <dt className="mono">shipped</dt>
-            <dd>
-              <A href="https://devstats.me">DevStats</A>, <A href="https://github.com/priyansh-x/sloppy-reels">Sloppy</A> and{" "}
-              <A href="https://github.com/priyansh-x/agent-passport">Agent Passport</A>.
-            </dd>
-          </div>
-          <div className="row">
-            <dt className="mono">bits pilani</dt>
-            <dd>Electrical engineering, the long way round.</dd>
-          </div>
-          <NextLaunch />
-        </dl>
-      </section>
-
-      <footer className="foot mono">
-        <nav>
-          {links.map((l) => (
-            <A key={l.label} href={l.href}>
-              {l.label}
-            </A>
-          ))}
-        </nav>
-        <span className="sig">maybe yes, maybe no.</span>
-      </footer>
+      <nav className="links" aria-label="Elsewhere">
+        {links.map((l) => (
+          <a key={l.label} href={l.href} aria-label={l.label} title={l.label}
+            target={l.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">
+            {l.svg}
+          </a>
+        ))}
+      </nav>
     </main>
   );
 };

@@ -12,9 +12,9 @@ describe("home", () => {
     expect(screen.getByRole("heading", { name: "I want to do hard things." })).toBeInTheDocument();
   });
 
-  it("backs it up", () => {
+  it("links out with labelled icons only", () => {
     render(<Index />);
-    expect(screen.getByText(/Everest Base Camp/)).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Samora" })).toHaveAttribute("href", "https://www.samora.ai/");
+    expect(screen.getByRole("link", { name: "GitHub" })).toHaveAttribute("href", "https://github.com/priyansh-x");
+    expect(screen.getAllByRole("link")).toHaveLength(4);
   });
 });

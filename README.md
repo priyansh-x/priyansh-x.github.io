@@ -1,6 +1,6 @@
 # priyanshx.tech
 
-One page, black and white: *I want to do hard things.* Then the receipts: a short ledger of hard things so far, a live countdown to the next rocket launch, and dark water that ripples under the cursor.
+One screen, black and white: *I want to do hard things.* Behind it, a night sky: the cursor burns like an engine, a click launches a rocket, and the full stop lifts off on load.
 
 Vite + React + TypeScript. The page is `src/pages/Index.tsx`, the styles are `src/index.css`. Fonts: Instrument Serif and JetBrains Mono (Google Fonts).
 
