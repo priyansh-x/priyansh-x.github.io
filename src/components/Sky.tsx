@@ -17,7 +17,7 @@ const Sky = forwardRef<SkyHandle>((_, ref) => {
   }, []);
 
   useImperativeHandle(ref, () => ({
-    launch: (o) => (sky.current ? sky.current.launch(o) : o.onDone?.()),
+    launch: (o) => sky.current?.launch(o),
   }));
 
   return <canvas ref={canvas} className="sky" aria-hidden="true" />;

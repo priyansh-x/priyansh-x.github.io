@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Sky, { type SkyHandle } from "@/components/Sky";
 
 const LINE = "I want to do hard things.";
@@ -6,7 +6,7 @@ const LINE = "I want to do hard things.";
 const LINES = [["I", "want", "to", "do"], ["hard", "things"]];
 
 const icon = (d: string, stroke = false) => (
-  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"
+  <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"
     fill={stroke ? "none" : "currentColor"} stroke={stroke ? "currentColor" : undefined} strokeWidth={stroke ? 1.6 : undefined}>
     <path d={d} />
   </svg>
@@ -26,32 +26,31 @@ const links = [
 const Index = () => {
   const sky = useRef<SkyHandle>(null);
   const stop = useRef<HTMLSpanElement>(null);
-  const [stopAway, setStopAway] = useState(false);
 
-  // The full stop is a rocket: once the line has landed, it lifts off.
+  // The full stop is the launch pad. Once the line has landed, something
+  // lifts off from it; every click after that sends up another.
   useEffect(() => {
-    let back = 0;
-    const id = window.setTimeout(() => {
+    const fire = (power = 1) => {
       const el = stop.current;
       if (!el || !sky.current) return;
       const r = el.getBoundingClientRect();
-      const fs = parseFloat(getComputedStyle(el).fontSize);
-      const radius = Math.max(3, fs * 0.055);
-      setStopAway(true);
-      sky.current.launch({
-        x: r.left + r.width * 0.42,
-        y: r.top + r.height * 0.8 - radius,
-        r: radius,
-        ignite: 0.9,
-        onDone: () => { back = window.setTimeout(() => setStopAway(false), 1400); },
-      });
-    }, 1800);
-    return () => { window.clearTimeout(id); window.clearTimeout(back); };
+      sky.current.launch({ x: r.left + r.width * 0.4, y: r.top + r.height * 0.74, power });
+    };
+    const id = window.setTimeout(() => fire(1), 1900);
+    const onDown = (e: PointerEvent) => {
+      if (!(e.target as HTMLElement).closest("a")) fire(0.85);
+    };
+    window.addEventListener("pointerdown", onDown);
+    return () => {
+      window.clearTimeout(id);
+      window.removeEventListener("pointerdown", onDown);
+    };
   }, []);
 
   return (
     <main className="page">
       <Sky ref={sky} />
+      <div className="grain" aria-hidden="true" />
 
       <h1 className="line" aria-label={LINE}>
         {LINES.map((words, l) => (
@@ -59,7 +58,7 @@ const Index = () => {
             {words.map((word, w) => (
               <span key={w} className="word" style={{ animationDelay: `${0.15 + (l * 4 + w) * 0.12}s` }} aria-hidden="true">
                 {word}
-                {word === "things" && <span ref={stop} className={`stop${stopAway ? " away" : ""}`}>.</span>}
+                {word === "things" && <span ref={stop}>.</span>}
               </span>
             ))}
           </span>

@@ -1,234 +1,243 @@
-// A night sky over a launch site, drawn on one canvas.
-//  - stars that drift a little against the pointer (parallax)
-//  - the pointer burns like an engine: sparks that cool into smoke
-//  - rockets: a bright point that ignites, climbs, and leaves a plume
+// A long-exposure photograph of a night launch, drawn live.
+//
+//  - Star trails: every star sweeps the same angle around a pole above the
+//    frame, as they would in one long exposure. They turn, very slowly.
+//  - The pointer is a soft light: trails near it brighten, then settle.
+//  - Launches: one thin luminous trajectory from the pad, pitching over as it
+//    climbs, with the short dark gap where the first stage cuts off (MECO).
+//    Old trajectories stay on the "film" and fade, so launches accumulate.
 
-type Particle = {
-  x: number; y: number; vx: number; vy: number;
-  age: number; life: number; size: number; smoke: boolean; dim: number;
+type Star = { r: number; a: number; width: number; alpha: number };
+
+type Pt = { x: number; y: number };
+
+type Streak = {
+  p0: Pt; p1: Pt; p2: Pt; p3: Pt;
+  born: number;      // ms
+  climb: number;     // ms to reach the top of the frame
+  gapAt: number;     // 0..1 where MECO happens
+  power: number;     // brightness 0..1
 };
 
-type Star = { x: number; y: number; depth: number; alpha: number; phase: number };
+export type LaunchOptions = { x: number; y: number; power?: number };
 
-export type LaunchOptions = {
-  x: number;
-  y: number;
-  /** radius of the bright head, px */
-  r?: number;
-  /** seconds of ground smoke before lift-off */
-  ignite?: number;
-  /** 0..1 brightness */
-  dim?: number;
-  onDone?: () => void;
+const TRAIL = 0.26;          // radians every star sweeps (the exposure)
+const SPIN = 0.0035;         // radians per second the sky turns
+const FADE_MS = 45_000;      // how long a trajectory stays on the film
+const MAX_STREAKS = 6;
+const LIGHT_R = 300;         // pointer light radius, px
+
+const bez = (a: Pt, b: Pt, c: Pt, d: Pt, t: number): Pt => {
+  const u = 1 - t;
+  return {
+    x: u * u * u * a.x + 3 * u * u * t * b.x + 3 * u * t * t * c.x + t * t * t * d.x,
+    y: u * u * u * a.y + 3 * u * u * t * b.y + 3 * u * t * t * c.y + t * t * t * d.y,
+  };
 };
-
-type Rocket = Required<Omit<LaunchOptions, "onDone">> & {
-  vy: number; t: number; done: boolean; onDone?: () => void;
-};
-
-const MAX_PARTICLES = 1600;
 
 export function createSky(canvas: HTMLCanvasElement) {
   const ctx = canvas.getContext("2d");
   if (!ctx) return null;
 
-  // soft round sprite for smoke: drawn once, stamped many times
-  const puff = document.createElement("canvas");
-  puff.width = puff.height = 64;
-  const pctx = puff.getContext("2d");
-  if (pctx) {
-    const g = pctx.createRadialGradient(32, 32, 0, 32, 32, 32);
-    g.addColorStop(0, "rgba(255,255,255,1)");
-    g.addColorStop(0.4, "rgba(255,255,255,0.45)");
-    g.addColorStop(1, "rgba(255,255,255,0)");
-    pctx.fillStyle = g;
-    pctx.fillRect(0, 0, 64, 64);
-  }
+  // trails are drawn once per frame into this layer, then composited twice:
+  // dim everywhere, and bright inside the pointer's light
+  const layer = document.createElement("canvas");
+  const lctx = layer.getContext("2d")!;
+  const lit = document.createElement("canvas");
+  const litx = lit.getContext("2d")!;
 
   let w = 0, h = 0, dpr = 1;
+  let pole: Pt = { x: 0, y: 0 };
   let stars: Star[] = [];
-  const parts: Particle[] = [];
-  const rockets: Rocket[] = [];
-  const pointer = { x: 0.5, y: 0.5, sx: 0.5, sy: 0.5 };
-  let raf = 0, lastT = performance.now();
+  const streaks: Streak[] = [];
+  const light = { x: -9999, y: -9999, tx: -9999, ty: -9999, k: 0, lastMove: 0 };
+  let raf = 0;
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const resize = () => {
     dpr = Math.min(2, window.devicePixelRatio || 1);
     w = window.innerWidth;
     h = window.innerHeight;
-    canvas.width = Math.round(w * dpr);
-    canvas.height = Math.round(h * dpr);
-    const n = Math.round((w * h) / 5200);
-    stars = Array.from({ length: n }, () => ({
-      x: Math.random(),
-      y: Math.random(),
-      depth: 0.15 + Math.random() ** 2 * 0.85,
-      alpha: 0.12 + Math.random() ** 3 * 0.7,
-      phase: Math.random() * Math.PI * 2,
-    }));
-  };
-
-  const emit = (p: Omit<Particle, "age">) => {
-    if (parts.length >= MAX_PARTICLES) parts.shift();
-    parts.push({ ...p, age: 0 });
-  };
-
-  const rand = (a: number, b: number) => a + Math.random() * (b - a);
-
-  /** engine burn along a segment, thrust pointing (dx, dy) */
-  const burn = (x: number, y: number, dx: number, dy: number, power: number, dim = 1) => {
-    const n = Math.min(10, Math.ceil(power));
-    for (let i = 0; i < n; i++) {
-      const spread = rand(-0.35, 0.35);
-      const cos = Math.cos(spread), sin = Math.sin(spread);
-      const ex = -(dx * cos - dy * sin), ey = -(dx * sin + dy * cos);
-      const speed = rand(60, 220);
-      emit({ x, y, vx: ex * speed, vy: ey * speed, life: rand(0.25, 0.6), size: rand(0.8, 1.8), smoke: false, dim });
-      if (Math.random() < 0.5)
-        emit({ x, y, vx: ex * speed * 0.35 + rand(-15, 15), vy: ey * speed * 0.35 + rand(-15, 15),
-          life: rand(1.2, 2.6), size: rand(3, 7), smoke: true, dim });
+    for (const c of [canvas, layer, lit]) {
+      c.width = Math.round(w * dpr);
+      c.height = Math.round(h * dpr);
     }
+    pole = { x: w * 0.86, y: -h * 0.22 };
+    const reach = Math.hypot(Math.max(pole.x, w - pole.x), h - pole.y) * 1.05;
+    const n = Math.round(Math.min(1000, (w * h) / 1100));
+    stars = Array.from({ length: n }, () => {
+      const bright = Math.random() ** 4; // a few bright, many faint
+      return {
+        r: reach * Math.sqrt(0.02 + Math.random() * 0.98),
+        a: Math.random() * Math.PI * 2,
+        width: 0.45 + bright * 1.1,
+        alpha: 0.12 + bright * 0.8,
+      };
+    });
   };
 
-  const launch = (o: LaunchOptions) => {
-    rockets.push({ x: o.x, y: o.y, r: o.r ?? 2, ignite: o.ignite ?? 0.35, dim: o.dim ?? 1,
-      vy: 0, t: 0, done: false, onDone: o.onDone });
-  };
-
-  const step = (dt: number) => {
-    // pointer parallax eases toward the real pointer
-    pointer.sx += (pointer.x - pointer.sx) * Math.min(1, dt * 3);
-    pointer.sy += (pointer.y - pointer.sy) * Math.min(1, dt * 3);
-
-    for (const r of rockets) {
-      r.t += dt;
-      const base = r.y + r.r;
-      if (r.t < r.ignite) {
-        // ignition: smoke rolling out sideways from the pad
-        for (let i = 0; i < 3; i++) {
-          const dir = Math.random() < 0.5 ? -1 : 1;
-          emit({ x: r.x + rand(-r.r, r.r), y: base, vx: dir * rand(20, 140) * (r.r / 2), vy: rand(-25, 5),
-            life: rand(1.2, 2.4), size: rand(2, 5) * Math.max(1, r.r / 3), smoke: true, dim: r.dim });
-        }
-        emit({ x: r.x, y: base, vx: rand(-10, 10), vy: rand(20, 80), life: rand(0.1, 0.25), size: rand(1, 2) * Math.max(1, r.r / 3), smoke: false, dim: r.dim });
-      } else {
-        r.vy -= 520 * Math.max(1, r.r / 4) * dt;
-        r.y += r.vy * dt;
-        burn(r.x, r.y + r.r, 0, -1, 3 + Math.min(5, -r.vy / 120), r.dim);
-        if (r.y < -60 && !r.done) {
-          r.done = true;
-          r.onDone?.();
-        }
-      }
-    }
-    for (let i = rockets.length - 1; i >= 0; i--) if (rockets[i].done) rockets.splice(i, 1);
-
-    for (let i = parts.length - 1; i >= 0; i--) {
-      const p = parts[i];
-      p.age += dt / p.life;
-      if (p.age >= 1) { parts.splice(i, 1); continue; }
-      const drag = p.smoke ? 0.965 : 0.94;
-      p.vx *= drag; p.vy *= drag;
-      if (p.smoke) p.vy -= 6 * dt; // smoke lifts a little
-      p.x += p.vx * dt; p.y += p.vy * dt;
-    }
-  };
-
-  const draw = (now: number) => {
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.globalCompositeOperation = "source-over";
-    ctx.fillStyle = "#000";
-    ctx.fillRect(0, 0, w, h);
-
-    ctx.globalCompositeOperation = "lighter";
-    const ox = (pointer.sx - 0.5) * -40, oy = (pointer.sy - 0.5) * -28;
+  const drawTrails = (now: number) => {
+    lctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    lctx.clearRect(0, 0, w, h);
+    lctx.lineCap = "round";
+    const spin = reduced ? 0 : (now / 1000) * SPIN;
     for (const s of stars) {
-      const tw = 0.65 + 0.35 * Math.sin(now / 900 + s.phase);
-      ctx.fillStyle = `rgba(255,255,255,${s.alpha * tw})`;
-      const x = ((s.x * w + ox * s.depth) % w + w) % w;
-      const y = ((s.y * h + oy * s.depth) % h + h) % h;
-      const size = 0.6 + s.depth * 1.1;
-      ctx.fillRect(x, y, size, size);
+      const start = s.a + spin;
+      lctx.strokeStyle = `rgba(255,255,255,${s.alpha})`;
+      lctx.lineWidth = s.width;
+      lctx.beginPath();
+      lctx.arc(pole.x, pole.y, s.r, start, start + TRAIL);
+      lctx.stroke();
+    }
+  };
+
+  const drawStreak = (s: Streak, now: number) => {
+    const age = now - s.born;
+    const grow = Math.min(1, age / s.climb);
+    const fade = age <= s.climb ? 1 : Math.max(0, 1 - (age - s.climb) / FADE_MS);
+    if (fade <= 0) return false;
+
+    // the rocket accelerates: progress along the path eases in
+    const head = reduced ? 1 : grow ** 1.8;
+    const N = 260;
+    const pts: Pt[] = [];
+    for (let i = 0; i <= N; i++) {
+      const t = (i / N) * head;
+      pts.push(bez(s.p0, s.p1, s.p2, s.p3, t));
     }
 
-    for (const p of parts) {
-      const k = 1 - p.age;
-      if (p.smoke) {
-        const rad = p.size * (1.6 + p.age * 4);
-        ctx.globalAlpha = 0.09 * k * p.dim;
-        ctx.drawImage(puff, p.x - rad, p.y - rad, rad * 2, rad * 2);
-        ctx.globalAlpha = 1;
-      } else {
-        ctx.fillStyle = `rgba(255,255,255,${k * k * 0.9 * p.dim})`;
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.size * (0.5 + k * 0.5), 0, Math.PI * 2); ctx.fill();
+    ctx.lineCap = "round";
+    for (let pass = 0; pass < 2; pass++) {
+      for (let i = 1; i < pts.length; i++) {
+        const t = (i / N) * head;
+        if (t > s.gapAt && t < s.gapAt + 0.022) continue; // MECO
+        const second = t >= s.gapAt;
+        const along = 1 - t * 0.6;
+        const width = (second ? 0.8 : 1.5) * along + 0.3;
+        const a = (second ? 0.7 : 1) * along * s.power * fade;
+        if (pass === 0) {
+          ctx.strokeStyle = `rgba(255,255,255,${a * 0.05})`;
+          ctx.lineWidth = width * 6;
+        } else {
+          ctx.strokeStyle = `rgba(255,255,255,${Math.min(1, a * 0.95)})`;
+          ctx.lineWidth = width;
+        }
+        ctx.beginPath();
+        ctx.moveTo(pts[i - 1].x, pts[i - 1].y);
+        ctx.lineTo(pts[i].x, pts[i].y);
+        ctx.stroke();
       }
     }
 
-    for (const r of rockets) {
-      // glow, then the hot point itself
-      const g = ctx.createRadialGradient(r.x, r.y, 0, r.x, r.y, r.r * 6);
-      g.addColorStop(0, `rgba(255,255,255,${0.35 * r.dim})`);
+    // the burning head, while it climbs
+    if (grow < 1 && !reduced) {
+      const p = pts[pts.length - 1];
+      const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 22);
+      g.addColorStop(0, `rgba(255,255,255,${0.9 * s.power})`);
+      g.addColorStop(0.15, `rgba(255,255,255,${0.35 * s.power})`);
       g.addColorStop(1, "rgba(255,255,255,0)");
       ctx.fillStyle = g;
-      ctx.beginPath(); ctx.arc(r.x, r.y, r.r * 6, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = `rgba(255,255,255,${r.dim})`;
-      ctx.beginPath(); ctx.arc(r.x, r.y, r.r, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 22, 0, Math.PI * 2);
+      ctx.fill();
     }
+
+    // a low glow on the pad that cools after lift-off
+    const pad = Math.max(0, 1 - age / 3500) * s.power;
+    if (pad > 0 && !reduced) {
+      const g = ctx.createRadialGradient(s.p0.x, s.p0.y, 0, s.p0.x, s.p0.y, 120);
+      g.addColorStop(0, `rgba(255,255,255,${0.16 * pad})`);
+      g.addColorStop(1, "rgba(255,255,255,0)");
+      ctx.fillStyle = g;
+      ctx.fillRect(s.p0.x - 120, s.p0.y - 120, 240, 240);
+    }
+    return true;
   };
 
   const frame = (now: number) => {
-    const dt = Math.min(0.05, (now - lastT) / 1000);
-    lastT = now;
-    step(dt);
-    draw(now);
-    raf = requestAnimationFrame(frame);
-  };
+    drawTrails(now);
 
-  let last: { x: number; y: number } | null = null;
-  const onMove = (e: PointerEvent) => {
-    pointer.x = e.clientX / w;
-    pointer.y = e.clientY / h;
-    const p = { x: e.clientX, y: e.clientY };
-    if (last) {
-      const dx = p.x - last.x, dy = p.y - last.y;
-      const dist = Math.hypot(dx, dy);
-      if (dist > 0.5) {
-        const steps = Math.min(6, Math.ceil(dist / 10));
-        for (let k = 1; k <= steps; k++)
-          burn(last.x + (dx * k) / steps, last.y + (dy * k) / steps, dx / dist, dy / dist, Math.min(3, dist / 8 / steps + 0.5));
-      }
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.globalCompositeOperation = "source-over";
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // dim sky everywhere
+    ctx.globalAlpha = 0.32;
+    ctx.drawImage(layer, 0, 0);
+    ctx.globalAlpha = 1;
+
+    // the pointer's light: eases toward the pointer, fades when it rests
+    light.x += (light.tx - light.x) * 0.12;
+    light.y += (light.ty - light.y) * 0.12;
+    const idle = now - light.lastMove;
+    const target = idle < 120 ? 1 : 0;
+    light.k += (target - light.k) * (target ? 0.08 : 0.015);
+    if (light.k > 0.01) {
+      litx.setTransform(1, 0, 0, 1, 0, 0);
+      litx.globalCompositeOperation = "source-over";
+      litx.clearRect(0, 0, lit.width, lit.height);
+      litx.drawImage(layer, 0, 0);
+      litx.globalCompositeOperation = "destination-in";
+      const R = LIGHT_R * dpr;
+      const g = litx.createRadialGradient(light.x * dpr, light.y * dpr, 0, light.x * dpr, light.y * dpr, R);
+      g.addColorStop(0, `rgba(0,0,0,${light.k})`);
+      g.addColorStop(0.5, `rgba(0,0,0,${light.k * 0.4})`);
+      g.addColorStop(1, "rgba(0,0,0,0)");
+      litx.fillStyle = g;
+      litx.fillRect(0, 0, lit.width, lit.height);
+      ctx.globalCompositeOperation = "lighter";
+      ctx.drawImage(lit, 0, 0);
+      ctx.drawImage(lit, 0, 0);
+      ctx.globalCompositeOperation = "source-over";
     }
-    last = p;
-  };
-  const onLeave = () => { last = null; };
-  const onDown = (e: PointerEvent) => {
-    if ((e.target as HTMLElement).closest("a")) return;
-    launch({ x: e.clientX, y: h + 4, r: 2.2, ignite: 0.25 });
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.globalCompositeOperation = "lighter";
+    for (let i = streaks.length - 1; i >= 0; i--) if (!drawStreak(streaks[i], now)) streaks.splice(i, 1);
+    ctx.globalCompositeOperation = "source-over";
+
+    if (!reduced) raf = requestAnimationFrame(frame);
   };
 
-  const ambient = window.setInterval(() => {
-    if (!document.hidden) launch({ x: rand(0.1, 0.9) * w, y: h + 4, r: 1.2, ignite: 0.4, dim: 0.45 });
-  }, 9000);
+  const launch = ({ x, y, power = 1 }: LaunchOptions) => {
+    // the headline sits to the left, so every flight leans east, away from it
+    const room = Math.max(w - x, w * 0.45); // on phones it arcs out past the edge
+    const j = Math.random();
+    const s: Streak = {
+      p0: { x, y },
+      p1: { x: x + room * (0.14 + j * 0.06), y: y * 0.55 },
+      p2: { x: x + room * (0.32 + j * 0.12), y: y * (0.1 + j * 0.06) },
+      p3: { x: x + room * (0.7 + j * 0.25), y: -h * 0.12 },
+      born: performance.now(),
+      climb: 4200 + j * 1200,
+      gapAt: 0.6 + j * 0.06,
+      power,
+    };
+    streaks.push(s);
+    if (streaks.length > MAX_STREAKS) streaks.shift();
+    if (reduced) frame(performance.now());
+  };
+
+  const onMove = (e: PointerEvent) => {
+    if (light.tx < -999) { light.x = e.clientX; light.y = e.clientY; }
+    light.tx = e.clientX;
+    light.ty = e.clientY;
+    light.lastMove = performance.now();
+  };
 
   resize();
   window.addEventListener("resize", resize);
   window.addEventListener("pointermove", onMove);
-  window.addEventListener("pointerdown", onDown);
-  document.addEventListener("pointerleave", onLeave);
-
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduced) draw(0);
+  if (reduced) frame(performance.now());
   else raf = requestAnimationFrame(frame);
 
   return {
-    launch: (o: LaunchOptions) => (reduced ? o.onDone?.() : launch(o)),
+    launch,
     destroy() {
       cancelAnimationFrame(raf);
-      window.clearInterval(ambient);
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", onMove);
-      window.removeEventListener("pointerdown", onDown);
-      document.removeEventListener("pointerleave", onLeave);
     },
   };
 }
