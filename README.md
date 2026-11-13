@@ -1,6 +1,6 @@
 # priyanshx.tech
 
-One screen, black and white: *I want to do hard things.* Behind it, a long-exposure night sky; the cursor is a gravitational lens that bends the star trails around it.
+A hand-scrawled page, white ink on black: *Priyansh's Website*, *i want to do hard things*, four scribbled links and a rocket with a face (click it). Every letter is generated pen strokes with a wobble, written out on load. No fonts.
 
 Vite + React + TypeScript. The page is `src/pages/Index.tsx`, the styles are `src/index.css`. Fonts: Instrument Serif and JetBrains Mono (Google Fonts).
 

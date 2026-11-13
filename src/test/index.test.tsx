@@ -9,12 +9,17 @@ describe("home", () => {
 
   it("says the line", () => {
     render(<Index />);
-    expect(screen.getByRole("heading", { name: "I want to do hard things." })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /I want to do hard things\./ })).toBeInTheDocument();
   });
 
   it("signs it", () => {
     render(<Index />);
-    expect(screen.getByText("Priyansh Joshi")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /Priyansh’s Website/ })).toBeInTheDocument();
+  });
+
+  it("has a rocket you can launch", () => {
+    render(<Index />);
+    expect(screen.getByRole("button", { name: "Launch the rocket" })).toBeInTheDocument();
   });
 
   it("links out with labelled icons only", () => {

@@ -1,56 +1,117 @@
-import Sky from "@/components/Sky";
+import { useEffect } from "react";
+import { scrawl } from "@/lib/scrawl";
+import Ink, { timeline } from "@/components/Ink";
+import Rocket from "@/components/Rocket";
 
-const LINE = "I want to do hard things.";
-// Two lines, always: "I want to do" / "hard things."
-const LINES = [["I", "want", "to", "do"], ["hard", "things."]];
-
-const icon = (d: string, stroke = false) => (
-  <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"
-    fill={stroke ? "none" : "currentColor"} stroke={stroke ? "currentColor" : undefined} strokeWidth={stroke ? 1.6 : undefined}>
-    <path d={d} />
-  </svg>
-);
+// Everything is written once, the same way on every visit (fixed seeds).
+const line1 = scrawl("Priyansh's", { seed: 3, tilt: 7, jitter: 1.3 });
+const line2 = scrawl("Webs^te", { seed: 9, tilt: 7, jitter: 1.3 });
+const tagline = scrawl("i want to do hard things", {
+  seed: 21,
+  tilt: 8,
+  jitter: 1.4,
+});
+const TITLE_RATE = 1.5;
+const TAG_RATE = 3;
+const LINK_RATE = 2.2;
+const ROCKET_RATE = 4;
 
 const links = [
-  { label: "GitHub", href: "https://github.com/priyansh-x",
-    svg: icon("M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.8 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2.9-.3 2-.4 3-.4s2.1.1 3 .4c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.5-1.5 7.8-5.8 7.8-10.9C23.5 5.7 18.3.5 12 .5z") },
-  { label: "X", href: "https://x.com/otziiz",
-    svg: icon("M18.244 2H21.5l-7.5 8.572L22.5 22h-6.844l-5.36-7.01L4.16 22H.9l8.02-9.166L.5 2h7.02l4.84 6.39L18.244 2zm-1.2 18h1.86L7.04 4H5.06l11.984 16z") },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/priyansh-joshi-206658273/",
-    svg: icon("M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5V9h3v10zM6.5 7.7a1.7 1.7 0 110-3.5 1.7 1.7 0 010 3.5zM19 19h-3v-5c0-1.2-.5-2-1.6-2-.9 0-1.4.6-1.6 1.2-.1.2-.1.5-.1.8v5h-3V9h3v1.3c.4-.6 1.1-1.5 2.7-1.5 2 0 3.5 1.3 3.5 4.1V19z") },
-  { label: "Email", href: "mailto:f20250479@pilani.bits-pilani.ac.in",
-    svg: icon("M3 5h18v14H3zM3 7l9 6 9-6", true) },
-];
+  {
+    label: "X",
+    text: "X",
+    href: "https://x.com/otziiz",
+    seed: 31,
+    pos: { left: "4%", top: "12%" },
+    rot: -6,
+  },
+  {
+    label: "GitHub",
+    text: "gh",
+    href: "https://github.com/priyansh-x",
+    seed: 37,
+    pos: { left: "28%", top: "30%" },
+    rot: 4,
+  },
+  {
+    label: "LinkedIn",
+    text: "Li",
+    href: "https://www.linkedin.com/in/priyansh-joshi-206658273/",
+    seed: 41,
+    pos: { left: "53%", top: "0%" },
+    rot: -3,
+  },
+  {
+    label: "Email",
+    text: "@",
+    href: "mailto:f20250479@pilani.bits-pilani.ac.in",
+    seed: 43,
+    pos: { left: "80%", top: "20%" },
+    rot: 8,
+  },
+].map((l) => ({
+  ...l,
+  ink: scrawl(l.text, { seed: l.seed, tilt: 8, jitter: 1.3 }),
+}));
 
-const Index = () => (
-  <main className="page">
-    <Sky />
-    <div className="grain" aria-hidden="true" />
+// one pen: each piece starts when the last one is done
+const t1 = 0.3;
+const t2 = t1 + timeline(line1, TITLE_RATE).total + 0.12;
+const t3 = t2 + timeline(line2, TITLE_RATE).total + 0.2;
+let t = t3 + timeline(tagline, TAG_RATE).total + 0.2;
+const linkDelays = links.map((l) => {
+  const start = t;
+  t += timeline(l.ink, LINK_RATE).total + 0.06;
+  return start;
+});
+const rocketAt = t;
 
-    <header className="top">
-      <p className="name">Priyansh Joshi</p>
-      <nav className="links" aria-label="Elsewhere">
-        {links.map((l) => (
-          <a key={l.label} href={l.href} aria-label={l.label} title={l.label}
-            target={l.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">
-            {l.svg}
-          </a>
-        ))}
-      </nav>
-    </header>
+const Index = () => {
+  // Safety net: if the browser ever stalls the pen (a background tab, a link
+  // preview bot), show everything fully written a moment after it should be.
+  useEffect(() => {
+    const id = window.setTimeout(
+      () => document.documentElement.classList.add("inked"),
+      (rocketAt + 2.5) * 1000,
+    );
+    return () => window.clearTimeout(id);
+  }, []);
 
-    <h1 className="line" aria-label={LINE}>
-      {LINES.map((words, l) => (
-        <span key={l}>
-          {words.map((word, w) => (
-            <span key={w} className="word" style={{ animationDelay: `${0.15 + (l * 4 + w) * 0.12}s` }} aria-hidden="true">
-              {word}
-            </span>
-          ))}
-        </span>
-      ))}
-    </h1>
-  </main>
-);
+  return (
+    <main className="page">
+      <h1 className="sr-only">
+        Priyansh&rsquo;s Website. I want to do hard things.
+      </h1>
+
+      <div className="sheet">
+        <div className="title">
+          <Ink ink={line1} delay={t1} rate={TITLE_RATE} className="l1" />
+          <Ink ink={line2} delay={t2} rate={TITLE_RATE} className="l2" />
+          <Ink ink={tagline} delay={t3} rate={TAG_RATE} className="tag" />
+        </div>
+
+        <div className="scatter">
+          <nav aria-label="Elsewhere">
+            {links.map((l, i) => (
+              <a
+                key={l.label}
+                href={l.href}
+                aria-label={l.label}
+                className="link"
+                style={{ ...l.pos, rotate: `${l.rot}deg` }}
+                target={l.href.startsWith("http") ? "_blank" : undefined}
+                rel="noreferrer"
+              >
+                <Ink ink={l.ink} delay={linkDelays[i]} rate={LINK_RATE} />
+              </a>
+            ))}
+          </nav>
+
+          <Rocket delay={rocketAt} rate={ROCKET_RATE} />
+        </div>
+      </div>
+    </main>
+  );
+};
 
 export default Index;
